@@ -2,8 +2,6 @@
 
 **CyborgSecurity** is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.
 
----
-
 ## What It Does
 
 - Monitors neural biosignals for spoofing, drift, and replay attacks  
@@ -15,8 +13,6 @@
 - Sends alerts to a local Flask dashboard  
 - Supports encrypted alert logging and future email notifications  
 
----
-
 ## Features
 
 - Cyborg Simulation: Emulates biosignals and I/O traffic for implantable devices  
@@ -26,8 +22,6 @@
 - Logging: CSV, JSON, and plaintext logging of all anomalies  
 - Encryption: Alerts are encrypted using Fernet (symmetric AES)  
 - Debug Mode Toggle: Turn debug output on or off via terminal  
-
----
 
 ## How to Run
 
@@ -60,16 +54,12 @@ python cyborgsecurity.py
 
 You’ll be prompted to toggle debug mode and the system will begin scanning.
 
----
-
 ## Accessing the Dashboard
 
 Once the system finishes scanning:
 
 * Open your browser and go to: `http://localhost:5000`
 * View all alerts, threat severities, and device metadata.
-
----
 
 ## Output Files
 
@@ -78,8 +68,6 @@ Once the system finishes scanning:
 * `alerts.csv`: Tabular version of all alerts
 * `ENCRYPTION_KEY`: Not stored — ephemeral key is generated at runtime (for now)
 
----
-
 ## Debug Mode
 
 When launching, type `on` to enable debug mode or `off` to keep it silent.
@@ -87,8 +75,6 @@ When launching, type `on` to enable debug mode or `off` to keep it silent.
 ```text
 [INPUT] Type 'on' to enable debug mode, 'off' to disable, or 'exit' to quit.
 ```
-
----
 
 ## Implant Simulation
 
@@ -99,8 +85,6 @@ The system currently simulates a **NeuroLink V3** implant, but you can expand th
 * Smart cochlear implants
 * Retinal chip implants
 * Brain-computer interfaces (BCIs)
-
----
 
 ## Author
 
