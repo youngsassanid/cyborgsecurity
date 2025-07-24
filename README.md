@@ -1,3 +1,4 @@
+
 # CyborgSecurity
 
 **CyborgSecurity** is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.
@@ -28,9 +29,9 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/cyborgsecurity.git
+git clone https://github.com/youngsassanid/cyborgsecurity.git
 cd cyborgsecurity
-````
+```
 
 ### 2. Set Up the Virtual Environment
 
@@ -52,13 +53,16 @@ pip install flask cryptography
 python cyborgsecurity.py
 ```
 
-You’ll be prompted to toggle debug mode and the system will begin scanning.
+You'll be prompted to toggle debug mode and the system will begin scanning.
 
 ## Accessing the Dashboard
 
 Once the system finishes scanning:
 
-* Open your browser and go to: `http://localhost:5000`
+* Open your browser and go to: `http://localhost:5000/dashboard`
+* Login with:
+  * Username: `admin`
+  * Password: `cyborg123`
 * View all alerts, threat severities, and device metadata.
 
 ## Output Files
@@ -89,5 +93,3 @@ The system currently simulates a **NeuroLink V3** implant, but you can expand th
 ## Author
 
 Created by **Sam Kazemi**
-
-
