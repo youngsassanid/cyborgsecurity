@@ -26,6 +26,7 @@ import csv
 import os
 import smtplib
 from email.message import EmailMessage
+# from email.mime.text import MIMEText
 from flask import Flask, jsonify, render_template_string, request
 from cryptography.fernet import Fernet
 import argparse
@@ -50,7 +51,7 @@ DEBUG_MODE = False
 class CyborgInterface:
     def __init__(self, device_id):
         self.device_id = device_id
-        self.implant_type = "NeuroLink V3"
+        self.implant_type = "NeuraLink V3"
         self.signal_baseline = [random.gauss(50, 5) for _ in range(100)]
         self.traffic_log = []
         self.memory_fingerprint = self.generate_memory_fingerprint()
@@ -723,6 +724,25 @@ MAIN_PAGE_HTML = '''
     </style>
 </head>
 <body>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
+
     <div class="container">
         <header>
             <div class="hero-content">
@@ -731,6 +751,9 @@ MAIN_PAGE_HTML = '''
                 <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p>
                 <a href="/dashboard" class="hero-button">
                     <i class="fas fa-shield-alt"></i> Access Security Dashboard
+                </a>
+                <a href="/threat-intel" class="hero-button" style="background: linear-gradient(145deg, var(--purple), #6a0dad); margin-top: 15px;">
+    <i class="fas fa-globe"></i> Open Threat Intelligence
                 </a>
             </div>
         </header>
@@ -890,9 +913,6 @@ pip install -r requirements.txt</code>
             <a href="https://github.com/youngsassanid/cyborgsecurity" class="cta-button" target="_blank">
                 Download Now
             </a>
-            <a href="/dashboard" class="cta-button">
-                <i class="fas fa-tachometer-alt"></i> View Dashboard
-            </a>
         </section>
         <footer>
             <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
@@ -911,56 +931,1319 @@ def home():
 @requires_auth
 def dashboard():
     decrypted_alerts = [json.loads(cipher.decrypt(a.encode())) for a in monitor_instance.alerts]
+    # Reverse so newest alerts appear first
+    decrypted_alerts.reverse()
+
     return render_template_string('''
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>CyborgSecurity Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #001a00; color: #e0e0e0; }
-            h1, h2 { color: #00ff41; text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); }
-            .alert { 
-                background-color: #003b00; 
-                border-left: 5px solid #ff3300; 
-                padding: 15px; 
-                margin: 10px 0; 
-                border-radius: 4px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --gray: #1a1a1a;
+                --light-gray: #2a2a2a;
+                --critical: #ff0033;
+                --warning: #ffaa00;
+                --info: #00aaff;
+                --success: #00cc00;
             }
-            .severity-high { border-left-color: #ff0000; }
-            .severity-medium { border-left-color: #ff9900; }
-            .severity-low { border-left-color: #00cc00; }
-            .device-info { background-color: #008f11; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-            a { color: #00aaff; text-decoration: none; }
-            a:hover { text-decoration: underline; }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: #e0e0e0;
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                padding: 30px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .device-info {
+                background: linear-gradient(145deg, var(--dark), var(--darker));
+                padding: 18px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                font-size: 1.1rem;
+            }
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin: 20px 0;
+                padding: 15px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 12px;
+                border: 1px solid rgba(0, 143, 17, 0.3);
+            }
+            .controls input, .controls select, .controls button {
+                padding: 10px 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                background: var(--darker);
+                color: var(--primary);
+            }
+            .controls input::placeholder {
+                color: #777;
+            }
+            .controls button {
+                background: var(--primary);
+                color: var(--black);
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .controls button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .alert-list {
+                max-height: 70vh;
+                overflow-y: auto;
+                margin-top: 20px;
+            }
+            .alert {
+                background: rgba(0, 59, 0, 0.2);
+                border-left: 6px solid var(--info);
+                padding: 16px;
+                margin: 12px 0;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                transition: transform 0.2s;
+            }
+            .alert:hover {
+                transform: translateX(5px);
+            }
+            .alert.critical { border-left-color: var(--critical); }
+            .alert.high { border-left-color: #ff3300; }
+            .alert.medium { border-left-color: var(--warning); }
+            .alert.low { border-left-color: var(--success); }
+
+            .alert-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            .alert-reason {
+                font-size: 1.2rem;
+            }
+            .alert-severity {
+                font-size: 0.9rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 3px 8px;
+                border-radius: 5px;
+            }
+            .alert-time {
+                font-size: 0.9rem;
+                color: var(--secondary);
+            }
+            .alert-data {
+                margin-top: 8px;
+                font-family: monospace;
+                font-size: 0.95rem;
+                color: #ccc;
+                background: rgba(0, 0, 0, 0.3);
+                padding: 10px;
+                border-radius: 6px;
+                overflow-x: auto;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 40px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+            .empty-state {
+                text-align: center;
+                padding: 40px;
+                color: #777;
+                font-style: italic;
+            }
+            @media (max-width: 768px) {
+                .controls {
+                    flex-direction: column;
+                }
+                .controls button {
+                    width: 100%;
+                }
+            }
         </style>
     </head>
     <body>
-        <h1>CyborgSecurity Dashboard</h1>
-        <div class="device-info">
-            <strong>Implant Type:</strong> {{ implant_type }}<br>
-            <strong>Device ID:</strong> {{ device_id }}
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-shield-alt"></i> CyborgSecurity Dashboard</h1>
+                <p>Real-Time Threat Monitoring for Neural Implants</p>
+            </header>
+
+            <div class="device-info">
+                <strong>Implant Type:</strong> {{ implant_type }} |
+                <strong>Device ID:</strong> {{ device_id }} |
+                <strong>Total Alerts:</strong> <span id="alert-count">{{ alerts|length }}</span>
+            </div>
+
+            <!-- Interactive Controls -->
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="🔍 Search reason or data..." />
+                <select id="severityFilter">
+                    <option value="">All Severities</option>
+                    <option value="5">Critical (5)</option>
+                    <option value="4">High (4)</option>
+                    <option value="3">Medium (3)</option>
+                    <option value="2">Low-Medium (2)</option>
+                    <option value="1">Low (1)</option>
+                </select>
+                <button onclick="refreshAlerts()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+                <label>
+                    <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh(this)">
+                    Auto-refresh
+                </label>
+                <button onclick="clearAlerts()" style="background:#ff3300">
+                    <i class="fas fa-trash"></i> Clear All
+                </button>
+                <button onclick="exportToJson()">
+                    <i class="fas fa-file-export"></i> Export JSON
+                </button>
+                <button onclick="exportToCsv()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+            </div>
+
+            <!-- Alert List -->
+            <div class="alert-list" id="alertList">
+                {% if alerts %}
+                    {% for alert in alerts %}
+                        <div class="alert alert-{{ 'critical' if alert.severity == 5 else 'high' if alert.severity >= 4 else 'medium' if alert.severity >= 2 else 'low' }}"
+                             data-severity="{{ alert.severity }}" data-reason="{{ alert.reason }}" data-data='{{ alert.data | tojson }}'>
+                            <div class="alert-header">
+                                <span class="alert-reason">{{ alert.reason }}</span>
+                                <span class="alert-severity">Severity: {{ alert.severity }}</span>
+                            </div>
+                            <div class="alert-time">{{ alert.time }}</div>
+                            <div class="alert-data">{{ alert.data }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                        <p>No alerts detected. System secure.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="footer">
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+            </div>
         </div>
-        <h2>Security Alerts ({{alerts|length}})</h2>
-        {% for alert in alerts %}
-        <div class="alert severity-{{ 'high' if alert.severity >= 4 else 'medium' if alert.severity >= 2 else 'low' }}">
-            <strong>{{ alert.reason }}</strong> (Severity: {{ alert.severity }})<br>
-            Time: {{ alert.time }}<br>
-            Data: {{ alert.data }}
-        </div>
-        {% endfor %}
-        <p><a href="/">← Back to Home</a></p>
+
+        <script>
+            let autoRefreshInterval;
+
+            function filterAlerts() {
+                const search = document.getElementById('searchInput').value.toLowerCase();
+                const severity = document.getElementById('severityFilter').value;
+                const alerts = document.querySelectorAll('.alert');
+
+                alerts.forEach(alert => {
+                    const reason = alert.getAttribute('data-reason').toLowerCase();
+                    const data = alert.getAttribute('data-data').toLowerCase();
+                    const alertSeverity = alert.getAttribute('data-severity');
+
+                    const matchesSearch = reason.includes(search) || data.includes(search);
+                    const matchesSeverity = !severity || alertSeverity === severity;
+
+                    alert.style.display = matchesSearch && matchesSeverity ? 'block' : 'none';
+                });
+
+                updateAlertCount();
+            }
+
+            function updateAlertCount() {
+                const visible = document.querySelectorAll('.alert[style*="display: block"], .alert:not([style])').length;
+                document.getElementById('alert-count').textContent = visible;
+            }
+
+            function refreshAlerts() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const alertList = document.getElementById('alertList');
+                        let html = '';
+
+                        if (data.length === 0) {
+                            html = `
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                                    <p>No alerts detected. System secure.</p>
+                                </div>`;
+                        } else {
+                            data.reverse(); // newest first
+                            data.forEach(alert => {
+                                const level = alert.severity === 5 ? 'critical' :
+                                             alert.severity >= 4 ? 'high' :
+                                             alert.severity >= 2 ? 'medium' : 'low';
+                                html += `
+                                <div class="alert alert-${level}" data-severity="${alert.severity}" data-reason="${alert.reason}" data-data='${JSON.stringify(alert.data)}'>
+                                    <div class="alert-header">
+                                        <span class="alert-reason">${alert.reason}</span>
+                                        <span class="alert-severity">Severity: ${alert.severity}</span>
+                                    </div>
+                                    <div class="alert-time">${alert.time}</div>
+                                    <div class="alert-data">${JSON.stringify(alert.data)}</div>
+                                </div>`;
+                            });
+                        }
+                        alertList.innerHTML = html;
+                        filterAlerts();
+                        document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+                    })
+                    .catch(err => console.error('Failed to refresh alerts:', err));
+            }
+
+            function toggleAutoRefresh(checkbox) {
+                if (checkbox.checked) {
+                    autoRefreshInterval = setInterval(refreshAlerts, 3000);
+                } else {
+                    clearInterval(autoRefreshInterval);
+                }
+            }
+
+            function clearAlerts() {
+                if (confirm("Are you sure you want to clear all alerts? This cannot be undone.")) {
+                    fetch('/api/clear_alerts', { method: 'POST' })
+                        .then(() => {
+                            document.getElementById('alertList').innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                                    <p>All alerts cleared. System reset.</p>
+                                </div>`;
+                            updateAlertCount();
+                        })
+                        .catch(err => alert('Failed to clear alerts.'));
+                }
+            }
+
+            function exportToJson() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `cyborgsecurity_alerts_${new Date().toISOString().split('T')[0]}.json`;
+                        a.click();
+                    });
+            }
+
+            function exportToCsv() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const headers = ['time', 'reason', 'severity', 'data', 'device_id'];
+                        const rows = data.map(alert => [
+                            alert.time,
+                            alert.reason,
+                            alert.severity,
+                            JSON.stringify(alert.data),
+                            alert.device_id
+                        ]);
+                        let csv = headers.join(',') + '\\n' + rows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\\n');
+
+                        const blob = new Blob([csv], { type: 'text/csv' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `cyborgsecurity_alerts_${new Date().toISOString().split('T')[0]}.csv`;
+                        a.click();
+                    });
+            }
+
+            // Initialize
+            document.getElementById('searchInput').addEventListener('input', filterAlerts);
+            document.getElementById('severityFilter').addEventListener('change', filterAlerts);
+
+            // Set initial count
+            updateAlertCount();
+
+            // Auto-refresh off by default
+            document.getElementById('autoRefresh').checked = false;
+        </script>
     </body>
     </html>
-    ''', alerts=decrypted_alerts, 
-        implant_type=monitor_instance.interface.implant_type,
-        device_id=monitor_instance.interface.device_id)
+    ''',
+    alerts=decrypted_alerts,
+    implant_type=monitor_instance.interface.implant_type,
+    device_id=monitor_instance.interface.device_id,
+    now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 @app.route('/api/alerts', methods=['GET'])
 @requires_auth
 def api_alerts():
     decrypted_alerts = [json.loads(cipher.decrypt(a.encode())) for a in monitor_instance.alerts]
     return jsonify(decrypted_alerts)
+
+# ========== New Interactive API Endpoints ==========
+
+@app.route('/api/clear_alerts', methods=['POST'])
+@requires_auth
+def clear_alerts():
+    global monitor_instance
+    # Clear alerts in memory
+    monitor_instance.alerts.clear()
+    monitor_instance.exported_alerts.clear()
+    # Clear files
+    open('alerts.json', 'w').close()
+    open('alerts.csv', 'w').close()
+    logging.info("All alerts cleared via dashboard.")
+    return jsonify({"status": "success", "message": "All alerts cleared."}), 200
+
+# ========== Threat Intelligence Feed ==========
+@app.route('/threat-intel')
+@requires_auth
+def threat_intel():
+    # Simulated real-time threat intelligence data
+    sample_threats = [
+        {"type": "IP", "value": "192.168.220.45", "source": "Botnet C2", "severity": "High", "timestamp": "2025-04-27T14:22:33"},
+        {"type": "Hash", "value": "a1b2c3d4e5f67890abcdef1234567890", "source": "Ransomware Variant X", "severity": "Critical", "timestamp": "2025-04-27T14:20:11"},
+        {"type": "Domain", "value": "malware-c2[.]shadownet", "source": "Phishing Campaign", "severity": "High", "timestamp": "2025-04-27T14:18:05"},
+        {"type": "IP", "value": "10.5.5.177", "source": "Insider Threat", "severity": "Medium", "timestamp": "2025-04-27T14:15:44"},
+        {"type": "Hash", "value": "f0e1d2c3b4a5968778695a4b3c2d1e0f", "source": "Spyware Module", "severity": "Critical", "timestamp": "2025-04-27T14:12:20"},
+        {"type": "Domain", "value": "fake-login[.]cyber-scam.com", "source": "Credential Harvester", "severity": "High", "timestamp": "2025-04-27T14:10:01"},
+    ]
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Threat Intel | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --gray: #1a1a1a;
+                --critical: #ff0033;
+                --warning: #ffaa00;
+                --info: #00aaff;
+                --purple: #8a2be2;
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: #e0e0e0;
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                padding: 30px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .subtitle {
+                font-size: 1.1rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin: 20px 0;
+                padding: 15px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 12px;
+                border: 1px solid rgba(0, 143, 17, 0.3);
+            }
+            .controls input, .controls select, .controls button {
+                padding: 10px 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                background: var(--darker);
+                color: var(--primary);
+            }
+            .controls input::placeholder {
+                color: #777;
+            }
+            .controls button {
+                background: var(--primary);
+                color: var(--black);
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .controls button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .threat-list {
+                max-height: 70vh;
+                overflow-y: auto;
+                margin-top: 20px;
+            }
+            .threat {
+                background: rgba(0, 59, 0, 0.2);
+                border-left: 6px solid var(--info);
+                padding: 16px;
+                margin: 12px 0;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                transition: transform 0.2s;
+            }
+            .threat:hover {
+                transform: translateX(5px);
+            }
+            .threat.critical { border-left-color: var(--critical); }
+            .threat.high { border-left-color: #ff3300; }
+            .threat.medium { border-left-color: var(--warning); }
+            .threat.ip { border-left-width: 8px; }
+            .threat.hash { background: rgba(138, 43, 226, 0.1); }
+            .threat.domain { background: rgba(0, 170, 255, 0.1); }
+            .threat-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            .threat-value {
+                font-size: 1.2rem;
+                font-family: monospace;
+                word-break: break-all;
+            }
+            .threat-type {
+                font-size: 0.9rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 3px 8px;
+                border-radius: 5px;
+            }
+            .threat-source {
+                color: var(--secondary);
+                font-size: 0.95rem;
+            }
+            .threat-time {
+                font-size: 0.9rem;
+                color: var(--secondary);
+            }
+            .footer {
+                text-align: center;
+                margin-top: 40px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+            .empty-state {
+                text-align: center;
+                padding: 40px;
+                color: #777;
+                font-style: italic;
+            }
+            .pulse {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% { opacity: 0.7; }
+                50% { opacity: 1; }
+                100% { opacity: 0.7; }
+            }
+            @media (max-width: 768px) {
+                .controls {
+                    flex-direction: column;
+                }
+                .controls button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-globe"></i> Threat Intelligence Feed</h1>
+                <p class="subtitle pulse">Live simulated global cyber threat data</p>
+            </header>
+
+            <div class="controls">
+                <input type="text" id="searchThreat" placeholder="🔍 Search IP, hash, or domain..." />
+                <select id="filterType">
+                    <option value="">All Types</option>
+                    <option value="IP">IP Address</option>
+                    <option value="Hash">Malware Hash</option>
+                    <option value="Domain">Domain</option>
+                </select>
+                <select id="filterSeverity">
+                    <option value="">All Severities</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                </select>
+                <button onclick="refreshThreatFeed()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+                <button onclick="simulateNewThreat()" style="background:var(--purple)">
+                    <i class="fas fa-bolt"></i> Inject Threat
+                </button>
+            </div>
+
+            <div class="threat-list" id="threatList">
+                {% for threat in threats %}
+                    <div class="threat threat-{{ threat.severity|lower }} threat-{{ threat.type|lower }}"
+                         data-type="{{ threat.type }}" data-severity="{{ threat.severity }}" data-value="{{ threat.value }}">
+                        <div class="threat-header">
+                            <span class="threat-value">{{ threat.value }}</span>
+                            <span class="threat-type">{{ threat.type }} - {{ threat.severity }}</span>
+                        </div>
+                        <div class="threat-source">Source: {{ threat.source }}</div>
+                        <div class="threat-time">{{ threat.timestamp }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="footer">
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Home</a> | <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+            </div>
+        </div>
+
+        <script>
+            function filterThreats() {
+                const search = document.getElementById('searchThreat').value.toLowerCase();
+                const type = document.getElementById('filterType').value;
+                const severity = document.getElementById('filterSeverity').value;
+                const threats = document.querySelectorAll('.threat');
+
+                threats.forEach(threat => {
+                    const value = threat.getAttribute('data-value').toLowerCase();
+                    const threatType = threat.getAttribute('data-type');
+                    const threatSeverity = threat.getAttribute('data-severity');
+
+                    const matchesSearch = value.includes(search);
+                    const matchesType = !type || threatType === type;
+                    const matchesSeverity = !severity || threatSeverity === severity;
+
+                    threat.style.display = matchesSearch && matchesType && matchesSeverity ? 'block' : 'none';
+                });
+            }
+
+            function refreshThreatFeed() {
+                // Simulate fetching new data
+                const mockThreats = [
+                    {type: "IP", value: generateIP(), source: "DDoS Botnet", severity: randomSeverity(), timestamp: new Date().toISOString().slice(0, 19)},
+                    {type: "Hash", value: generateHash(), source: "Trojan Downloader", severity: "Critical", timestamp: new Date().toISOString().slice(0, 19)},
+                    {type: "Domain", value: generateDomain(), source: "Phishing Kit", severity: "High", timestamp: new Date().toISOString().slice(0, 19)}
+                ];
+                const threatList = document.getElementById('threatList');
+                let html = '';
+                mockThreats.forEach(t => {
+                    const level = t.severity === 'Critical' ? 'critical' : t.severity === 'High' ? 'high' : 'medium';
+                    html += `
+                    <div class="threat threat-${level.toLowerCase()} threat-${t.type.toLowerCase()}" 
+                         data-type="${t.type}" data-severity="${t.severity}" data-value="${t.value}">
+                        <div class="threat-header">
+                            <span class="threat-value">${t.value}</span>
+                            <span class="threat-type">${t.type} - ${t.severity}</span>
+                        </div>
+                        <div class="threat-source">Source: ${t.source}</div>
+                        <div class="threat-time">${t.timestamp}</div>
+                    </div>`;
+                });
+                // Add new threats to top
+                threatList.innerHTML = html + threatList.innerHTML;
+                filterThreats();
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+            }
+
+            function simulateNewThreat() {
+                const types = ['IP', 'Hash', 'Domain'];
+                const sources = ['APT Group 9002', 'Ransomware Gang', 'Insider Leak', 'IoT Botnet'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const value = type === 'IP' ? generateIP() : type === 'Hash' ? generateHash() : generateDomain();
+                const source = sources[Math.floor(Math.random() * sources.length)];
+                const severity = ['Critical', 'High'][Math.floor(Math.random() * 2)];
+                const timestamp = new Date().toISOString().slice(0, 19);
+
+                const threatList = document.getElementById('threatList');
+                const level = severity === 'Critical' ? 'critical' : 'high';
+                const newThreat = document.createElement('div');
+                newThreat.className = `threat threat-${level.toLowerCase()} threat-${type.toLowerCase()} pulse`;
+                newThreat.setAttribute('data-type', type);
+                newThreat.setAttribute('data-severity', severity);
+                newThreat.setAttribute('data-value', value);
+                newThreat.innerHTML = `
+                    <div class="threat-header">
+                        <span class="threat-value">${value}</span>
+                        <span class="threat-type">${type} - ${severity}</span>
+                    </div>
+                    <div class="threat-source">Source: ${source} (Injected)</div>
+                    <div class="threat-time">${timestamp}</div>
+                `;
+                threatList.prepend(newThreat);
+                // Remove pulse after animation
+                setTimeout(() => newThreat.classList.remove('pulse'), 2000);
+                filterThreats();
+            }
+
+            function generateIP() {
+                return `192.168.${Math.floor(Math.random()*200)}.${Math.floor(Math.random()*255)}`;
+            }
+            function generateHash() {
+                return Array(32).fill(0).map(() => Math.floor(Math.random()*16).toString(16)).join('');
+            }
+            function generateDomain() {
+                const subs = ['login', 'secure', 'update', 'account'];
+                const doms = ['cyber', 'net', 'web', 'cloud'];
+                const tlds = ['com', 'biz', 'info', 'ru'];
+                return `${subs[Math.floor(Math.random()*subs.length)]}-${doms[Math.floor(Math.random()*doms.length)]}.${tlds[Math.floor(Math.random()*tlds.length)]}`;
+            }
+            function randomSeverity() {
+                const r = Math.random();
+                return r < 0.3 ? 'Critical' : r < 0.7 ? 'High' : 'Medium';
+            }
+
+            // Initialize
+            document.getElementById('searchThreat').addEventListener('input', filterThreats);
+            document.getElementById('filterType').addEventListener('change', filterThreats);
+            document.getElementById('filterSeverity').addEventListener('change', filterThreats);
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+        </script>
+    </body>
+    </html>
+    ''', threats=sample_threats, now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+# ========== Pricing Page ==========
+@app.route('/pricing')
+def pricing():
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Pricing | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --gray: #1a1a1a;
+                --card-bg: rgba(0, 59, 0, 0.2);
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .pricing-card {
+                background: var(--card-bg);
+                border-radius: 12px;
+                padding: 30px;
+                margin: 20px auto;
+                max-width: 600px;
+                text-align: center;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            .pricing-card h2 {
+                color: var(--primary);
+                margin-top: 0;
+            }
+            .price {
+                font-size: 3rem;
+                font-weight: bold;
+                color: var(--primary);
+                margin: 15px 0;
+            }
+            .features {
+                margin: 20px 0;
+                text-align: left;
+            }
+            .features li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .cta-button {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 12px 25px;
+                background: var(--primary);
+                color: var(--black);
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+            .cta-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .note {
+                margin-top: 30px;
+                padding: 15px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                font-style: italic;
+                color: var(--secondary);
+                text-align: center;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav>
+            <a href="/">Home</a>
+            <a href="/resources">Resources</a>
+            <a href="/pricing" class="current">Pricing</a>
+            <a href="/contact">Contact</a>                     
+        </nav>
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-tags"></i> Transparent Pricing</h1>
+                <p class="tagline">An application built for all of mankind (and cyborgkind).</p>
+            </header>
+
+            <!-- Pricing Card -->
+            <div class="pricing-card">
+                <h2>Open Source & Currently Free</h2>
+                <div class="price">$0.00</div>
+                <p>No hidden fees. No subscriptions. No paywalls.</p>
+
+                <ul class="features">
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> 100% Free to Use</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Full Source Code Available</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> No Feature Locks</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Commercial & Personal Use</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Community Support</li>
+                </ul>
+
+                <a href="https://github.com/youngsassanid/cyborgsecurity" class="cta-button" target="_blank">
+                    <i class="fab fa-github"></i> Download Now
+                </a>
+            </div>
+
+            <div class="note">
+                <p>
+                    <strong>Note:</strong> CyborgSecurity is a simulation prototype developed for educational and research purposes. 
+                    While it models real-world security features, it is <strong>not intended for production use</strong>. 
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>
+    ''')
+
+# ========== Resources Page ==========
+@app.route('/resources')
+def resources():
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Resources | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --info: #00aaff;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .section {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 25px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h2 {
+                color: var(--primary);
+                margin-top: 0;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .external-link {
+                color: var(--info);
+                text-decoration: none;
+            }
+            .external-link:hover {
+                text-decoration: underline;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/resources" class="current">Resources</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/contact">Contact</a>
+        </nav>
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-brain"></i> The Future of Cyber-Medical Security</h1>
+                <p class="tagline">Understanding neural implants, medical devices, and the need for advanced protection.</p>
+            </header>
+
+            <div class="section">
+                <h2>🧠 What Is Neuralink?</h2>
+                <p>
+                    <strong>Neuralink</strong>, founded by Elon Musk, is developing ultra-high bandwidth brain-computer interfaces (BCIs) to connect the human brain directly to computers. 
+                    The goal is to treat neurological conditions (like Parkinson’s, epilepsy, and spinal cord injuries) and eventually enable humans to keep pace with artificial intelligence.
+                </p>
+                <p>
+                    The Neuralink implant uses tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. While revolutionary, this creates a new attack surface: if compromised, a hacker could potentially manipulate brain signals, steal neural data, or disable the device.
+                </p>
+                <p>
+                    <strong>Learn more:</strong>
+                    <ul>
+                        <li><a href="https://neuralink.com" class="external-link" target="_blank">Neuralink Official Site</a></li>
+                        <li><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2313295" class="external-link" target="_blank">First Human Implant (NEJM)</a></li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>🏥 Cyber-Medical Implants: Pacemakers, Insulin Pumps & More</h2>
+                <p>
+                    Devices like <strong>pacemakers</strong>, <strong>insulin pumps</strong>, and <strong>neurostimulators</strong> are already in widespread use and rely on wireless communication for monitoring and updates. 
+                    Unfortunately, many of these devices have known security vulnerabilities.
+                </p>
+                <p>
+                    In 2017, the FDA recalled 500,000 pacemakers due to cybersecurity risks that could allow unauthorized access to alter pacing or deplete the battery. 
+                    As these devices become more connected, they become targets for cyberattacks with life-threatening consequences.
+                </p>
+                <p>
+                    <strong>Learn more:</strong>
+                    <ul>
+                        <li><a href="https://www.fda.gov/medical-devices/implants-and-prosthetics/cybersecurity-medical-devices" class="external-link" target="_blank">FDA on Medical Device Cybersecurity</a></li>
+                        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7554872/" class="external-link" target="_blank">Security of Implantable Medical Devices (NCBI)</a></li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>🛡️ How CyborgSecurity Simulates Real Protection</h2>
+                <p>
+                    While CyborgSecurity is a simulation, it models real-world threats to neural and medical implants:
+                </p>
+                <ul>
+                    <li><strong>Spoofed Signal Detection:</strong> Simulates protection against fake neural commands (e.g., a hacker trying to trigger a false signal).</li>
+                    <li><strong>Packet Integrity Verification:</strong> Uses SHA-256 to detect tampered data — critical for ensuring commands sent to a pacemaker are authentic.</li>
+                    <li><strong>Replay Attack Prevention:</strong> Timestamps stop attackers from re-sending old commands (e.g., repeating a "disable" signal).</li>
+                    <li><strong>Memory Integrity Checks:</strong> Monitors for unauthorized changes to device firmware or configuration.</li>
+                </ul>
+                <p>
+                    This app is designed to <strong>educate, simulate, and inspire</strong> future developers and security researchers on the importance of securing human-machine interfaces.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Preparing for the future of human-machine integration</p>
+            <p>Simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>
+    ''')
+
+# ========== Contact Page ==========
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        # Get form data
+        name = request.form.get('name', 'Anonymous')
+        email = request.form.get('email', 'No email provided')
+        message = request.form.get('message', '').strip()
+
+        if not message:
+            return '''
+            <script>alert("Message cannot be empty."); window.history.back();</script>
+            '''
+
+        # Format email content
+        subject = f"Contact Form Submission: {name}"
+        body = f"""
+        Name: {name}
+        Email: {email}
+        Message:
+        {message}
+        """
+        msg = f"Subject: {subject}\n\n{body}"
+
+        # Try to send email
+        try:
+            server = smtplib.SMTP('smtp.gmail.com', 587)  # Change if not using Gmail
+            server.starttls()
+            server.login('your_email@gmail.com', 'your_app_password')  # Use environment variables!
+            server.sendmail('your_email@gmail.com', 'mkazemi@sfsu.edu', msg)
+            server.quit()
+            logging.info(f"Contact form submitted by {name} ({email})")
+            return '''
+            <script>alert("Message sent successfully! Thank you."); window.location.href="/contact";</script>
+            '''
+        except Exception as e:
+            logging.error(f"Failed to send contact email: {e}")
+            return '''
+            <script>alert("Failed to send message. Please try again later."); window.location.href="/contact";</script>
+            '''
+
+    # GET request — show the form
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Contact | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0; /* Match your site's grayish-white */
+                --info: #00aaff;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light); /* Fixed: now uses grayish-white */
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            .card {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 30px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h1, h2 {
+                color: var(--primary);
+            }
+            label {
+                display: block;
+                margin: 15px 0 5px;
+                color: var(--light);
+            }
+            input[type="text"], 
+            input[type="email"], 
+            textarea {
+                width: 100%;
+                padding: 10px;
+                background: var(--darker);
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                border-radius: 6px;
+                color: var(--light);
+                font-family: 'Segoe UI', sans-serif;
+            }
+            textarea {
+                min-height: 150px;
+                resize: vertical;
+            }
+            .submit-btn {
+                margin-top: 20px;
+                padding: 12px 25px;
+                background: var(--primary);
+                color: var(--black);
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .submit-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .social-links {
+                margin: 30px 0;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            .social-links a {
+                font-size: 1.5rem;
+                color: var(--primary);
+                transition: transform 0.3s;
+            }
+            .social-links a:hover {
+                transform: scale(1.3);
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/resources">Resources</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/contact" class="current">Contact</a>
+        </nav>
+
+<div class="container">
+    <header>
+        <h1><i class="fas fa-envelope"></i> Contact</h1>
+        <p class="tagline pulse">Got feedback, bugs, or ideas? Reach out directly.</p>
+    </header>
+
+            <div class="card">
+                <h2>📬 Get in Touch</h2>
+                <form method="POST">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <p><strong>Email:</strong> <a href="mailto:mkazemi@sfsu.edu" style="color:var(--info)">mkazemi@sfsu.edu</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/youngsassanid" class="external-link" target="_blank">@youngsassanid</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="external-link" target="_blank">Sām Kazemi</a></p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://github.com/youngsassanid"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>
+    ''')
 
 # ========== Unit Tests ==========
 class TestCyborgSecurity(unittest.TestCase):
@@ -1044,6 +2327,7 @@ def main():
     print(f"[INFO] Monitoring started. {len(monitor.alerts)} alerts detected so far.")
     print("[INFO] Visit http://localhost:5000 for the main page")
     print("[INFO] Visit http://localhost:5000/dashboard for the protected dashboard")
+    print("[INFO] Visit http://localhost:5000/threat-intel for the threat intelligence feed")
     print("[INFO] Dashboard login - username: admin, password: cyborg123")
     print("[INFO] Press Ctrl+C to stop the server.")
     
