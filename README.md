@@ -1,28 +1,67 @@
-
 # CyborgSecurity
 
-**CyborgSecurity** is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.
+**CyborgSecurity** is a full-stack, simulated cybersecurity suite for human-machine interfaces (HMI), designed to protect next-generation cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based application combines real-time threat detection, encrypted alerting, and a futuristic web console to simulate the security challenges of a cybernetic future.
+
+From spoofed biosignals to memory tampering, CyborgSecurity models real-world attack vectors and provides a secure, interactive platform for education, research, and innovation in implant security.
+
+---
 
 ## What It Does
 
-- Monitors neural biosignals for spoofing, drift, and replay attacks  
-- Validates data packet integrity and detects clock tampering  
-- Verifies device memory fingerprints to prevent firmware-level hacks  
-- Calculates threat severity scores for triage  
-- Auto-remediates certain critical threats  
-- Logs alerts to encrypted JSON and CSV files  
-- Sends alerts to a local Flask dashboard  
-- Supports encrypted alert logging and future email notifications  
+- Monitors neural biosignals for **spoofing, drift, and replay attacks**  
+- Validates data packet integrity using **SHA-256 checksums**  
+- Detects **system clock tampering** and **memory integrity violations**  
+- Calculates dynamic **threat severity scores** for triage  
+- Logs alerts to **encrypted JSON, CSV, and plaintext logs**  
+- Serves a **real-time, interactive Flask dashboard** with filtering and export  
+- Simulates a **live Threat Intelligence Feed** with dynamic attack injection  
+- Provides a **comprehensive educational hub** on neural and medical implants  
+- Supports **contact and feedback** via integrated email form  
+- All secure pages protected with **authentication (admin/cyborg123)**  
+
+---
 
 ## Features
 
-- Cyborg Simulation: Emulates biosignals and I/O traffic for implantable devices  
-- Threat Detection: Identifies spoofed, replayed, and tampered data  
-- Flask Web Dashboard: View alerts and implant type in real time  
-- Email Placeholder: Easily extend to send alerts via email  
-- Logging: CSV, JSON, and plaintext logging of all anomalies  
-- Encryption: Alerts are encrypted using Fernet (symmetric AES)  
-- Debug Mode Toggle: Turn debug output on or off via terminal  
+### Core Security Simulation
+- Emulates biosignals and I/O traffic for implantable devices
+- Implements statistical anomaly detection (mean ± 3σ)
+- Detects packet tampering, replay attacks, and memory corruption
+- Generates realistic threat alerts with timestamps and severity
+
+### Multi-Page Web Console
+- **`/`** – Cyberpunk-themed landing page with project overview
+- **`/dashboard`** – Real-time security dashboard with:
+  - Alert filtering by severity
+  - Search functionality
+  - Auto-refresh toggle
+  - Export to CSV and encrypted JSON
+  - "Clear Alerts" functionality
+- **`/threat-intel`** – Simulated threat intelligence feed with:
+  - Dynamic threat injection
+  - Search and filter by type/severity
+- **`/pricing`** – Transparent open-source licensing
+- **`/resources`** – Educational hub on:
+  - Neuralink and brain-computer interfaces
+  - FDA-recalled pacemakers (2017 cybersecurity vulnerability)
+  - Implant security best practices
+  - Links to OWASP, NIST, IEEE, and FDA
+- **`/contact`** – Functional contact form that sends emails via `smtplib`
+
+### Security & Architecture
+- **End-to-end alert encryption** using Fernet (AES)
+- **Authentication** on all secure pages (`@requires_auth`)
+- **Real-time interactivity** with JavaScript filtering and auto-refresh
+- **Unit-tested core logic** for reliability
+- **Modular design** for easy extension
+
+### UI/UX
+- **Cyberpunk aesthetic** with glowing green borders, laser effects, and pulse animations
+- **Responsive design** for desktop and mobile
+- **Consistent navigation** across all pages
+- **Professional, immersive experience** resembling a real SOC (Security Operations Center)
+
+---
 
 ## How to Run
 
@@ -37,15 +76,11 @@ cd cyborgsecurity
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate       # On Windows use: .venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-> If `requirements.txt` does not exist, you can manually install:
-
-```bash
+source .venv/bin/activate       # On Windows: .venv\Scripts\activate
 pip install flask cryptography
 ```
+
+> No `requirements.txt`? Just install the two core dependencies.
 
 ### 3. Run the Program
 
@@ -53,43 +88,79 @@ pip install flask cryptography
 python cyborgsecurity.py
 ```
 
-You'll be prompted to toggle debug mode and the system will begin scanning.
+You can optionally pass arguments:
+```bash
+python cyborgsecurity.py --debug      # Enable debug mode
+python cyborgsecurity.py --no-debug   # Disable debug mode
+python cyborgsecurity.py test         # Run unit tests
+```
 
-## Accessing the Dashboard
+---
 
-Once the system finishes scanning:
+## Access the Web Console
 
-* Open your browser and go to: `http://localhost:5000/dashboard`
-* Login with:
-  * Username: `admin`
-  * Password: `cyborg123`
-* View all alerts, threat severities, and device metadata.
+Once running, open your browser and visit:
+
+| Page | URL | Login Required |
+|------|-----|----------------|
+| **Home** | `http://localhost:5000` | No |
+| **Dashboard** | `http://localhost:5000/dashboard` | Yes (`admin` / `cyborg123`) |
+| **Threat Intel** | `http://localhost:5000/threat-intel` | Yes |
+| **Pricing** | `http://localhost:5000/pricing` | Yes |
+| **Resources** | `http://localhost:5000/resources` | Yes |
+| **Contact** | `http://localhost:5000/contact` | Yes |
+
+---
 
 ## Output Files
 
-* `cyborgsecurity.log`: System events & errors
-* `alerts.json`: Decrypted alert data for external integrations
-* `alerts.csv`: Tabular version of all alerts
-* `ENCRYPTION_KEY`: Not stored — ephemeral key is generated at runtime (for now)
+- `cyborgsecurity.log` – System events and errors
+- `alerts.json` – Decrypted alert data (for analysis)
+- `alerts.csv` – Tabular log of all alerts
+- `ENCRYPTION_KEY` – *Not stored* (ephemeral key generated at runtime)
 
-## Debug Mode
+> **Note:** This is a simulation prototype. Not for production use.
 
-When launching, type `on` to enable debug mode or `off` to keep it silent.
+---
 
-```text
-[INPUT] Type 'on' to enable debug mode, 'off' to disable, or 'exit' to quit.
+## Debug Mode & Testing
+
+Use command-line arguments to control behavior:
+
+```bash
+python cyborgsecurity.py --debug    # Enable verbose logging
+python cyborgsecurity.py test       # Run unit tests
 ```
 
-## Implant Simulation
+Or follow the interactive prompt to toggle debug mode.
 
-The system currently simulates a **NeuroLink V3** implant, but you can expand the `CyborgInterface` class to model:
+---
 
-* Electronic prosthetic limbs
-* Implantable cardioverter-defibrillators (ICDs)
-* Smart cochlear implants
-* Retinal chip implants
-* Brain-computer interfaces (BCIs)
+## 🧠 Implant Simulation
+
+The system simulates a **NeuroLink V3** implant, but you can extend the `CyborgInterface` class to model:
+
+- Neuralink-style BCIs
+- Pacemakers and ICDs
+- Smart cochlear implants
+- Retinal chips
+- Electronic prosthetics
+
+Perfect for research, education, and exploring the future of cyber-physical security.
+
+---
+
+## Contact & Feedback
+
+Have a feature request, bug report, or collaboration idea?  
+Visit the **[Contact Page](http://localhost:5000/contact)** to send a message directly.
+
+Or connect on:
+- **GitHub:** [@youngsassanid](https://github.com/youngsassanid)
+- **LinkedIn:** [Sām Kazemi](https://www.linkedin.com/in/mojtaba-kazemi-529264317/)
+
+---
 
 ## Author
 
-Created by **Sam Kazemi**
+Created by **Sām Kazemi**  
