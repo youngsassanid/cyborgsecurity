@@ -256,8 +256,16 @@ MAIN_PAGE_HTML = '''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyborgSecurity - Advanced Cybersecurity Suite</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+    .hero-logo {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 20px auto;
+        display: block;
+        border-radius: 50%;
+}
         :root {
             --primary: #00ff41;
             --secondary: #008f11;
@@ -738,17 +746,21 @@ MAIN_PAGE_HTML = '''
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
         <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
         <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
     </nav>
 
     <div class="container">
         <header>
             <div class="hero-content">
+                <img src="/favicon.png" alt="CyborgSecurity Logo" class="hero-logo">
+
                 <h1 class="hero-title glow">CyborgSecurity</h1>
-                <p class="hero-subtitle">Advanced Cybersecurity Suite for Human-Machine Interfaces</p>
-                <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p>
+                <p class="hero-subtitle">Protecting next-generation cyborg systems from sophisticated cyber threats</p>
+                <!-- <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p> -->
                 <a href="/dashboard" class="hero-button">
                     <i class="fas fa-shield-alt"></i> Access Security Dashboard
                 </a>
@@ -830,83 +842,6 @@ MAIN_PAGE_HTML = '''
                 <li><strong>Debug Mode Toggle:</strong> Turn debug output on or off via terminal</li>
             </ul>
         </section>
-        <section class="section">
-            <h2>How to Run</h2>
-            <h3>1. Clone the Repository</h3>
-            <div class="usage">
-                <code>git clone https://github.com/youngsassanid/cyborgsecurity.git
-cd cyborgsecurity</code>
-            </div>
-            <h3>2. Set Up the Virtual Environment</h3>
-            <div class="usage">
-                <code>python -m venv .venv
-source .venv/bin/activate       # On Windows use: .venv\\Scripts\\activate
-pip install -r requirements.txt</code>
-            </div>
-            <p>If requirements.txt does not exist, you can manually install:</p>
-            <div class="usage">
-                <code>pip install flask cryptography</code>
-            </div>
-            <h3>3. Run the Program</h3>
-            <div class="usage">
-                <code>python cyborgsecurity.py</code>
-            </div>
-            <p>You'll be prompted to toggle debug mode and the system will begin scanning.</p>
-        </section>
-        <section class="section">
-            <h2>Accessing the Dashboard</h2>
-            <p>Once the system finishes scanning:</p>
-            <ul>
-                <li>Open your browser and go to: <strong>http://localhost:5000/dashboard</strong></li>
-                <li>View all alerts, threat severities, and device metadata.</li>
-            </ul>
-        </section>
-        <section class="section">
-            <h2>Output Files</h2>
-            <ul>
-                <li><strong>cyborgsecurity.log:</strong> System events & errors</li>
-                <li><strong>alerts.json:</strong> Decrypted alert data for external integrations</li>
-                <li><strong>alerts.csv:</strong> Tabular version of all alerts</li>
-                <li><strong>ENCRYPTION_KEY:</strong> Not stored — ephemeral key is generated at runtime (for now)</li>
-            </ul>
-        </section>
-        <section class="section">
-            <h2>Debug Mode</h2>
-            <p>When launching, type <strong>on</strong> to enable debug mode or <strong>off</strong> to keep it silent.</p>
-            <div class="usage">
-                <code>[INPUT] Type 'on' to enable debug mode, 'off' to disable, or 'exit' to quit.</code>
-            </div>
-        </section>
-        <section class="section">
-            <h2>Implant Simulation</h2>
-            <p>The system currently simulates a NeuroLink V3 implant, but you can expand the CyborgInterface class to model:</p>
-            <ul>
-                <li>Electronic prosthetic limbs</li>
-                <li>Implantable cardioverter-defibrillators (ICDs)</li>
-                <li>Smart cochlear implants</li>
-                <li>Retinal chip implants</li>
-                <li>Brain-computer interfaces (BCIs)</li>
-            </ul>
-        </section>
-         <section class="section">
-            <h2>Author</h2>
-            <div class="author-section">
-                <div class="author-bio">
-                    <p>Sām Kazemi is a dedicated <span class="highlight">Computer Science student at San Francisco State University</span> with a minor in Persian Studies, originally from Antioch, California and born in the East Bay Area. Born to Iranian immigrant parents, he was raised with strong values of hard work, resilience, and community commitment.</p>
-                    <p>Having witnessed the impact of gang violence firsthand, Sām serves as a <span class="highlight">mentor and community figure</span> promoting positive change, discipline, and empowerment. As a <span class="highlight">natural bodybuilder and martial artist</span>, he exemplifies physical and mental strength while encouraging others to follow constructive paths.</p>
-                    <p>Sām's passion for <span class="highlight">cybersecurity</span> drives his technical work, including developing <span class="highlight">CyborgSecurity</span>, a Python-based tool designed to protect advanced technologies like neural implants. Through this project, he aims to create solutions that safeguard privacy and security in today's connected world.</p>
-                    <p>Proud of his Iranian heritage, Sām is committed to advancing his community through <span class="highlight">education, cultural awareness, and advocacy</span>, blending his technical expertise and personal discipline to inspire success grounded in identity and values.</p>
-                </div>
-            </div>
-        </section>
-        <div class="social-buttons">
-            <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="social-button" target="_blank">
-                <i class="fab fa-linkedin"></i> View LinkedIn Profile
-            </a>
-            <a href="https://github.com/youngsassanid/cyborgsecurity" class="social-button" target="_blank">
-                <i class="fab fa-github"></i> View GitHub Repository
-            </a>
-        </div>
         <section class="cta-section">
             <h2>Ready to Secure Your Cyborg Infrastructure?</h2>
             <p>Download CyborgSecurity today and protect your human-machine interfaces from advanced cyber threats</p>
@@ -941,6 +876,7 @@ def dashboard():
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>CyborgSecurity Dashboard</title>
+        <link rel="icon" type="image/png" href="/favicon.png">                     
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
@@ -1347,6 +1283,7 @@ def threat_intel():
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Threat Intel | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
@@ -1666,6 +1603,7 @@ def pricing():
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Pricing | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
@@ -1796,13 +1734,26 @@ def pricing():
         </style>
     </head>
     <body>
-        <!-- Navigation -->
-        <nav>
-            <a href="/">Home</a>
-            <a href="/resources">Resources</a>
-            <a href="/pricing" class="current">Pricing</a>
-            <a href="/contact">Contact</a>                     
-        </nav>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
 
         <div class="container">
             <header>
@@ -1854,6 +1805,7 @@ def resources():
     <head>
         <meta charset="UTF-8" />
         <title>Resources | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
@@ -1955,12 +1907,26 @@ def resources():
         </style>
     </head>
     <body>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/resources" class="current">Resources</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/contact">Contact</a>
-        </nav>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
 
         <div class="container">
             <header>
@@ -2030,6 +1996,431 @@ def resources():
     </html>
     ''')
 
+# ========== User Guide Page ==========
+@app.route('/guide')
+def guide():
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Guide | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --gray: #1a1a1a;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .section {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 25px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h2, h3 {
+                color: var(--primary);
+            }
+            .usage {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 15px;
+                border-radius: 8px;
+                font-family: 'Courier New', monospace;
+                overflow-x: auto;
+            }
+            code {
+                color: var(--primary);
+                font-weight: bold;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-book-open"></i> Getting Started Guide</h1>
+                <p class="tagline">Your complete walkthrough for installing, running, and understanding CyborgSecurity.</p>
+            </header>
+
+            <section class="section">
+                <h2>How to Run</h2>
+                <h3>1. Clone the Repository</h3>
+                <div class="usage">
+                    <code>git clone https://github.com/youngsassanid/cyborgsecurity.git<br>cd cyborgsecurity</code>
+                </div>
+                <h3>2. Set Up the Virtual Environment</h3>
+                <div class="usage">
+                    <code>python -m venv .venv<br>source .venv/bin/activate       # On Windows use: .venv\\Scripts\\activate<br>pip install -r requirements.txt</code>
+                </div>
+                <p>If requirements.txt does not exist, you can manually install:</p>
+                <div class="usage">
+                    <code>pip install flask cryptography</code>
+                </div>
+                <h3>3. Run the Program</h3>
+                <div class="usage">
+                    <code>python cyborgsecurity.py</code>
+                </div>
+                <p>You'll be prompted to toggle debug mode and the system will begin scanning.</p>
+            </section>
+
+            <section class="section">
+                <h2>Accessing the Dashboard</h2>
+                <p>Once the system finishes scanning:</p>
+                <ul>
+                    <li>Open your browser and go to: <strong>http://localhost:5000/dashboard</strong></li>
+                    <li>View all alerts, threat severities, and device metadata.</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>Output Files</h2>
+                <ul>
+                    <li><strong>cyborgsecurity.log:</strong> System events & errors</li>
+                    <li><strong>alerts.json:</strong> Decrypted alert data for external integrations</li>
+                    <li><strong>alerts.csv:</strong> Tabular version of all alerts</li>
+                    <li><strong>ENCRYPTION_KEY:</strong> Not stored — ephemeral key is generated at runtime (for now)</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>Debug Mode</h2>
+                <p>When launching, type <strong>on</strong> to enable debug mode or <strong>off</strong> to keep it silent.</p>
+                <div class="usage">
+                    <code>[INPUT] Type 'on' to enable debug mode, 'off' to disable, or 'exit' to quit.</code>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Implant Simulation</h2>
+                <p>The system currently simulates a NeuroLink V3 implant, but you can expand the <code>CyborgInterface</code> class to model:</p>
+                <ul>
+                    <li>Electronic prosthetic limbs</li>
+                    <li>Implantable cardioverter-defibrillators (ICDs)</li>
+                    <li>Smart cochlear implants</li>
+                    <li>Retinal chip implants</li>
+                    <li>Brain-computer interfaces (BCIs)</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>
+    ''')
+
+# ========== About Page ==========
+@app.route('/about')
+def about():
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>About | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --gray: #1a1a1a;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .section {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 30px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h2 {
+                color: var(--primary);
+                margin-top: 0;
+            }
+            .highlight {
+                background: rgba(0, 255, 65, 0.2);
+                color: var(--primary);
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-weight: 600;
+            }
+            .social-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+                margin: 30px 0;
+            }
+            .social-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 14px 24px;
+                background: rgba(0, 59, 0, 0.4);
+                color: var(--primary);
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                min-width: 220px;
+                text-align: center;
+            }
+            .social-button:hover {
+                background: rgba(0, 255, 65, 0.2);
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-user"></i> About CyborgSecurity</h1>
+                <p class="tagline">The story behind the code, the mission, and the GOAT.</p>
+            </header>
+
+            <!-- Section 1: The Developer -->
+            <section class="section">
+                <h2>👤 The Developer</h2>
+                <div class="author-bio">
+            <img src="/sam.jpeg" alt="Sām Kazemi" 
+             style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
+            <p><strong>Sām Kazemi</strong> is a dedicated <strong>Computer Science student at San Francisco State University</strong> with a minor in Persian Studies, born and raised in the East Bay Area. Born to Iranian immigrant parents, he was raised with strong values of hard work, resilience, and community commitment.</p>
+            <p>Having witnessed the impact of gang violence firsthand, Sām serves as a <strong>mentor and community figure</strong> promoting positive change, discipline, and empowerment. As a <strong>natural bodybuilder and martial artist</strong>, he exemplifies physical and mental strength while encouraging others to follow constructive paths.</p>
+            <p>Sām's passion for <strong>cybersecurity</strong> drives his technical work, including developing <strong>CyborgSecurity</strong>, a Python-based tool designed to protect advanced technologies like neural implants. Through this project, he aims to create solutions that safeguard privacy and security in today's connected world.</p>
+            <p>Proud of his Iranian heritage, Sām is committed to advancing his community through <strong>education, cultural awareness, and advocacy</strong>, blending his technical expertise and personal discipline to inspire success grounded in identity and values.</p>
+            </div>
+            </section>
+
+            <!-- Section 2: Real-World Inspiration -->
+            <section class="section">
+                <h2>🛡️ Inspired by Real-World Threats</h2>
+                <p>CyborgSecurity was developed in response to <strong>real, life-threatening cybersecurity events</strong>, such as the <strong>FDA’s 2017 recall of 500,000 pacemakers</strong> due to vulnerabilities that could allow hackers to disable the devices or deliver fatal shocks.</p>
+                <p>As humans become increasingly integrated with technology—from neural implants like Neuralink to insulin pumps and prosthetics—securing these interfaces is not optional. It is a <strong>life-or-death necessity</strong>.</p>
+                <p>Through CyborgSecurity, Sām Kazemi explores this future from a technical and ethical perspective, building tools designed to safeguard the privacy and security of human-machine integration.</p>
+            </section>
+
+
+            <!-- Section 3: Origin & The GOAT Ethos -->
+            <section class="section">
+                <h2>🔥 The Origin: From Rejection to the GOAT</h2>
+            <img src="/the_goat.jpg" alt="The GOAT" 
+             style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
+                <p>CyborgSecurity began as a dream — literally. But its true origin lies in <strong>rage, rejection, and relentless hunger for success</strong>.</p>
+                <p>Sām Kazemi began his education in computer science before a time of massive upheaval in tech. After the COVID-19 pandemic, the industry was hit by mass layoffs, and the rise of AI tools like ChatGPT disrupted traditional hiring pipelines. The once-stable path of a computer science career suddenly felt like a battlefield.</p>
+                <p>Despite applying to dozens of internships and spending countless hours refining his applications, Sām was met with silence or rejection. As a martial artist, bodybuilder, and fighter who grew up in poverty, this situation triggered a <strong>fight-or-flight response</strong>. Every morning, he reminded himself: <em>"I will get an internship and a bright CS career — or die trying."</em></p>
+                <p>In that fire, he came to a realization: it wasn’t enough to be <em>good</em> at computer science. He had to be the <strong>GOAT</strong> — the Greatest of All Time.</p>
+                <p>The logo of CyborgSecurity isn’t random. It features a <strong>goat</strong> because <strong>GOAT stands for Greatest of All Time</strong>. Throughout his journey, Sām saw that many in the field were soft and uninspired — but he approached tech like a fighter. <strong>Disciplined, brutal, and relentless</strong>, he vowed to <strong>crush</strong> the competition in code the same way he would in a boxing ring.</p>
+                <p><strong>This is the GOAT Ethos.</strong> And CyborgSecurity is his war cry.</p>
+            </section>
+
+
+            <div class="social-buttons">
+                <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="social-button" target="_blank">
+                    <i class="fab fa-linkedin"></i> View LinkedIn Profile
+                </a>
+                <a href="https://github.com/youngsassanid/cyborgsecurity" class="social-button" target="_blank">
+                    <i class="fab fa-github"></i> View GitHub Repository
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>
+    ''')
+
 # ========== Contact Page ==========
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -2078,6 +2469,7 @@ def contact():
     <head>
         <meta charset="UTF-8" />
         <title>Contact | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/favicon.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
@@ -2194,12 +2586,26 @@ def contact():
         </style>
     </head>
     <body>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/resources">Resources</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/contact" class="current">Contact</a>
-        </nav>
+    <!-- ========== Navigation Bar ========== -->
+    <nav style="
+        background: rgba(0, 59, 0, 0.3);
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 65, 0.2);
+    ">
+        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
+        <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
+        <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
+        <a href="/about" style="color: var(--primary); text-decoration: none;">About</a>
+        <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
+    </nav>
 
 <div class="container">
     <header>
@@ -2244,6 +2650,24 @@ def contact():
     </body>
     </html>
     ''')
+
+# ========== Static Files ==========
+from flask import send_from_directory
+import os
+
+@app.route('/favicon.png')
+def favicon():
+    return send_from_directory(os.getcwd(), 'favicon.png', mimetype='image/png')
+
+from flask import send_file
+
+@app.route('/sam.jpeg')
+def serve_sam_image():
+    return send_file('sam.jpeg', mimetype='image/jpeg')
+
+@app.route('/the_goat.jpg')
+def serve_goat_image():
+    return send_file('the_goat.jpg', mimetype='image/jpg')
 
 # ========== Unit Tests ==========
 class TestCyborgSecurity(unittest.TestCase):
