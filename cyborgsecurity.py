@@ -32,6 +32,9 @@ from cryptography.fernet import Fernet
 import argparse
 import threading
 import unittest
+import html
+import subprocess
+from datetime import datetime, timedelta
 
 # ========== Logger Setup ==========
 logging.basicConfig(
@@ -759,7 +762,7 @@ MAIN_PAGE_HTML = '''
                 <img src="/favicon.png" alt="CyborgSecurity Logo" class="hero-logo">
 
                 <h1 class="hero-title glow">CyborgSecurity</h1>
-                <p class="hero-subtitle">Protecting next-generation cyborg systems from sophisticated cyber threats</p>
+                <p class="hero-subtitle">Protecting next-generation cyber-medical systems from sophisticated cyber threats</p>
                 <!-- <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p> -->
                 <a href="/dashboard" class="hero-button">
                     <i class="fas fa-shield-alt"></i> Access Security Dashboard
@@ -1018,13 +1021,14 @@ def dashboard():
                 border-radius: 6px;
                 overflow-x: auto;
             }
-            .footer {
-                text-align: center;
-                margin-top: 40px;
-                padding: 20px;
-                color: var(--secondary);
-                font-size: 0.9rem;
-            }
+                    footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-top: 60px;
+        }
             .empty-state {
                 text-align: center;
                 padding: 40px;
@@ -1081,6 +1085,13 @@ def dashboard():
                 <button onclick="exportToCsv()">
                     <i class="fas fa-file-csv"></i> Export CSV
                 </button>
+                <button onclick="downloadTests()" style="background:var(--primary); color:var(--black);">
+                    <i class="fas fa-vial"></i> Download Unit Tests
+                </button>
+                <button onclick="window.location='/test'" style="background:var(--primary); color:var(--black);">
+    <i class="fas fa-vial"></i> Run Unit Tests
+</button>
+
             </div>
 
             <!-- Alert List -->
@@ -1106,7 +1117,7 @@ def dashboard():
             </div>
 
             <div class="footer">
-                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
             </div>
         </div>
 
@@ -1136,6 +1147,13 @@ def dashboard():
                 const visible = document.querySelectorAll('.alert[style*="display: block"], .alert:not([style])').length;
                 document.getElementById('alert-count').textContent = visible;
             }
+            
+            function downloadTests() {
+    const link = document.createElement('a');
+    link.href = '/download/test';
+    link.download = 'test_cyborgsecurity.py';
+    link.click();
+}
 
             function refreshAlerts() {
                 fetch('/api/alerts')
@@ -2677,6 +2695,47 @@ def contact():
     </html>
     ''')
 
+# ========== Serve Test File ==========
+@app.route('/download/test')
+def download_test_file():
+    try:
+        return send_file(
+            'test_cyborgsecurity.py',
+            as_attachment=True,
+            download_name='test_cyborgsecurity.py',
+            mimetype='text/x-python'
+        )
+    except Exception as e:
+        return f"File not found: {str(e)}", 404
+    
+# ========== Test Page ==========
+@app.route('/test')
+@requires_auth
+def run_tests():
+    try:
+        result = subprocess.run(
+            ['python', '-m', 'unittest', 'test_cyborgsecurity.py', '-v'],
+            capture_output=True,
+            text=True
+        )
+        output = html.escape(result.stdout + result.stderr)
+        status = "✅ All tests passed!" if result.returncode == 0 else "❌ Some tests failed."
+    except Exception as e:
+        output = str(e)
+        status = "💥 Test execution failed."
+
+    return f'''
+    <html><head><style>
+        body {{ background:#001a00; color:#00ff41; font-family:monospace; padding:20px; }}
+        pre {{ background:#000; padding:15px; border-radius:8px; overflow:auto; }}
+    </style></head><body>
+        <h2>Unit Test Results</h2>
+        <p>{status}</p>
+        <pre>{output}</pre>
+        <a href="/dashboard" style="color:#00aaff;">← Back to Dashboard</a>
+    </body></html>
+    '''
+    
 # ========== Static Files ==========
 from flask import send_from_directory
 import os
