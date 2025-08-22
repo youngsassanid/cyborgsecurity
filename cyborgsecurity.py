@@ -769,10 +769,19 @@ MAIN_PAGE_HTML = '''
                 </a>
             </div>
         </header>
+
+                <img src="cyborgsecurity_visualizer.gif" 
+     alt="The GOAT stops a cyber threat" 
+     style="display:block; margin:15px auto; width:100%; border-radius:12px; 
+     box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+
         <section class="section">
             <h2>About CyborgSecurity</h2>
-            <p>CyborgSecurity is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.</p>
+            <p>CyborgSecurity is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed 
+            for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication 
+            tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.</p>
         </section>
+
         <section class="section">
             <h2>What It Does</h2>
             <ul>
@@ -1604,7 +1613,8 @@ def pricing():
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Pricing | CyborgSecurity</title>
         <link rel="icon" type="image/png" href="/favicon.png">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
                 --primary: #00ff41;
@@ -1806,7 +1816,8 @@ def resources():
         <meta charset="UTF-8" />
         <title>Resources | CyborgSecurity</title>
         <link rel="icon" type="image/png" href="/favicon.png">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
             :root {
                 --primary: #00ff41;
@@ -1941,7 +1952,8 @@ def resources():
                     The goal is to treat neurological conditions (like Parkinson’s, epilepsy, and spinal cord injuries) and eventually enable humans to keep pace with artificial intelligence.
                 </p>
                 <p>
-                    The Neuralink implant uses tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. While revolutionary, this creates a new attack surface: if compromised, a hacker could potentially manipulate brain signals, steal neural data, or disable the device.
+                    The Neuralink implant uses tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. 
+                    While revolutionary, this creates a new attack surface: if compromised, a hacker could potentially manipulate brain signals, steal neural data, or disable the device.
                 </p>
                 <p>
                     <strong>Learn more:</strong>
@@ -1955,7 +1967,8 @@ def resources():
             <div class="section">
                 <h2>🏥 Cyber-Medical Implants: Pacemakers, Insulin Pumps & More</h2>
                 <p>
-                    Devices like <strong>pacemakers</strong>, <strong>insulin pumps</strong>, and <strong>neurostimulators</strong> are already in widespread use and rely on wireless communication for monitoring and updates. 
+                    Devices like <strong>pacemakers</strong>, <strong>insulin pumps</strong>, and <strong>neurostimulators</strong> are already in widespread use and 
+                    rely on wireless communication for monitoring and updates. 
                     Unfortunately, many of these devices have known security vulnerabilities.
                 </p>
                 <p>
@@ -2373,19 +2386,26 @@ def about():
                 <div class="author-bio">
             <img src="/sam.jpeg" alt="Sām Kazemi" 
              style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
-            <p><strong>Sām Kazemi</strong> is a dedicated <strong>Computer Science student at San Francisco State University</strong> with a minor in Persian Studies, born and raised in the East Bay Area. Born to Iranian immigrant parents, he was raised with strong values of hard work, resilience, and community commitment.</p>
-            <p>Having witnessed the impact of gang violence firsthand, Sām serves as a <strong>mentor and community figure</strong> promoting positive change, discipline, and empowerment. As a <strong>natural bodybuilder and martial artist</strong>, he exemplifies physical and mental strength while encouraging others to follow constructive paths.</p>
-            <p>Sām's passion for <strong>cybersecurity</strong> drives his technical work, including developing <strong>CyborgSecurity</strong>, a Python-based tool designed to protect advanced technologies like neural implants. Through this project, he aims to create solutions that safeguard privacy and security in today's connected world.</p>
-            <p>Proud of his Iranian heritage, Sām is committed to advancing his community through <strong>education, cultural awareness, and advocacy</strong>, blending his technical expertise and personal discipline to inspire success grounded in identity and values.</p>
+            <p><strong>Sām Kazemi</strong> is a dedicated <strong>Computer Science student at San Francisco State University</strong> with a minor in Persian Studies, born and 
+            raised in the East Bay Area. Born to Iranian immigrant parents, he was raised with strong values of hard work, resilience, and community commitment.</p>
+            <p>Having witnessed the impact of gang violence firsthand, Sām serves as a <strong>mentor and community figure</strong> promoting positive change, discipline, 
+            and empowerment. As a <strong>natural bodybuilder and martial artist</strong>, he exemplifies physical and mental strength while encouraging others to follow constructive paths.</p>
+            <p>Sām's passion for <strong>cybersecurity</strong> drives his technical work, including developing <strong>CyborgSecurity</strong>, a Python-based tool designed to protect 
+            advanced technologies like neural implants. Through this project, he aims to create solutions that safeguard privacy and security in today's connected world.</p>
+            <p>Proud of his Iranian heritage, Sām is committed to advancing his community through <strong>education, cultural awareness, and advocacy</strong>, blending his technical 
+            expertise and personal discipline to inspire success grounded in identity and values.</p>
             </div>
             </section>
 
             <!-- Section 2: Real-World Inspiration -->
             <section class="section">
                 <h2>🛡️ Inspired by Real-World Threats</h2>
-                <p>CyborgSecurity was developed in response to <strong>real, life-threatening cybersecurity events</strong>, such as the <strong>FDA’s 2017 recall of 500,000 pacemakers</strong> due to vulnerabilities that could allow hackers to disable the devices or deliver fatal shocks.</p>
-                <p>As humans become increasingly integrated with technology—from neural implants like Neuralink to insulin pumps and prosthetics—securing these interfaces is not optional. It is a <strong>life-or-death necessity</strong>.</p>
-                <p>Through CyborgSecurity, Sām Kazemi explores this future from a technical and ethical perspective, building tools designed to safeguard the privacy and security of human-machine integration.</p>
+                <p>CyborgSecurity was developed in response to <strong>real, life-threatening cybersecurity events</strong>, such as the <strong>FDA’s 2017 recall of 500,000 pacemakers</strong> 
+                due to vulnerabilities that could allow hackers to disable the devices or deliver fatal shocks.</p>
+                <p>As humans become increasingly integrated with technology—from neural implants like Neuralink to insulin pumps and prosthetics—securing these interfaces is not optional. It 
+                is a <strong>life-or-death necessity</strong>.</p>
+                <p>Through CyborgSecurity, Sām Kazemi explores this future from a technical and ethical perspective, building tools designed to safeguard the privacy and security of 
+                human-machine integration.</p>
             </section>
 
 
@@ -2395,10 +2415,16 @@ def about():
             <img src="/the_goat.jpg" alt="The GOAT" 
              style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
                 <p>CyborgSecurity began as a dream — literally. But its true origin lies in <strong>rage, rejection, and relentless hunger for success</strong>.</p>
-                <p>Sām Kazemi began his education in computer science before a time of massive upheaval in tech. After the COVID-19 pandemic, the industry was hit by mass layoffs, and the rise of AI tools like ChatGPT disrupted traditional hiring pipelines. The once-stable path of a computer science career suddenly felt like a battlefield.</p>
-                <p>Despite applying to dozens of internships and spending countless hours refining his applications, Sām was met with silence or rejection. As a martial artist, bodybuilder, and fighter who grew up in poverty, this situation triggered a <strong>fight-or-flight response</strong>. Every morning, he reminded himself: <em>"I will get an internship and a bright CS career — or die trying."</em></p>
+                <p>Sām Kazemi began his education in computer science before a time of massive upheaval in tech. After the COVID-19 pandemic, the industry was hit by 
+                mass layoffs, and the rise of AI tools like ChatGPT disrupted traditional hiring pipelines. The once-stable path of a computer science career suddenly 
+                felt like a battlefield.</p>
+                <p>Despite applying to dozens of internships and spending countless hours refining his applications, Sām was met with silence or rejection. As a martial artist, 
+                bodybuilder, and fighter who grew up in poverty, this situation triggered a <strong>fight-or-flight response</strong>. Every morning, he reminded himself: 
+                <em>"I will get an internship and a bright CS career — or die trying."</em></p>
                 <p>In that fire, he came to a realization: it wasn’t enough to be <em>good</em> at computer science. He had to be the <strong>GOAT</strong> — the Greatest of All Time.</p>
-                <p>The logo of CyborgSecurity isn’t random. It features a <strong>goat</strong> because <strong>GOAT stands for Greatest of All Time</strong>. Throughout his journey, Sām saw that many in the field were soft and uninspired — but he approached tech like a fighter. <strong>Disciplined, brutal, and relentless</strong>, he vowed to <strong>crush</strong> the competition in code the same way he would in a boxing ring.</p>
+                <p>The logo of CyborgSecurity isn’t random. It features a <strong>goat</strong> because <strong>GOAT stands for Greatest of All Time</strong>. Throughout his journey, 
+                Sām saw that many in the field were soft and uninspired — but he approached tech like a fighter. <strong>Disciplined, brutal, and relentless</strong>, he vowed 
+                to <strong>crush</strong> the competition in code the same way he would in a boxing ring.</p>
                 <p><strong>This is the GOAT Ethos.</strong> And CyborgSecurity is his war cry.</p>
             </section>
 
@@ -2668,6 +2694,10 @@ def serve_sam_image():
 @app.route('/the_goat.jpg')
 def serve_goat_image():
     return send_file('the_goat.jpg', mimetype='image/jpg')
+
+@app.route('/cyborgsecurity_visualizer.gif')
+def serve_goat_shield():
+    return send_file('cyborgsecurity_visualizer.gif', mimetype='image/gif')
 
 # ========== Unit Tests ==========
 class TestCyborgSecurity(unittest.TestCase):
