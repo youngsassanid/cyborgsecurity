@@ -105,10 +105,12 @@ Once running, open your browser and visit:
 |------|-----|----------------|
 | **Home** | `http://localhost:5000` | No |
 | **Dashboard** | `http://localhost:5000/dashboard` | Yes (`admin` / `cyborg123`) |
-| **Threat Intel** | `http://localhost:5000/threat-intel` | Yes |
-| **Pricing** | `http://localhost:5000/pricing` | Yes |
-| **Resources** | `http://localhost:5000/resources` | Yes |
-| **Contact** | `http://localhost:5000/contact` | Yes |
+| **Threat Intel** | `http://localhost:5000/threat-intel` | Yes (`admin` / `cyborg123`) |
+| **Setup Guide** | `http://localhost:5000/guide` | No |
+| **Resources** | `http://localhost:5000/resources` | No |
+| **Pricing** | `http://localhost:5000/pricing` | No |
+| **About** | `http://localhost:5000/about` | No |
+| **Contact** | `http://localhost:5000/contact` | No |
 
 ---
 
@@ -164,3 +166,7 @@ Or connect on:
 ## Author
 
 Created by **Sām Kazemi**  
+
+## Credits
+
+Animated goat visualizer by **Amir Ashoori**
