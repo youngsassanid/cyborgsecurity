@@ -106,6 +106,7 @@ Once running, open your browser and visit:
 | **Home** | `http://localhost:5000` | No |
 | **Dashboard** | `http://localhost:5000/dashboard` | Yes (`admin` / `cyborg123`) |
 | **Threat Intel** | `http://localhost:5000/threat-intel` | Yes (`admin` / `cyborg123`) |
+| **Unit Tests** | `http://localhost:5000/test` | No |
 | **Setup Guide** | `http://localhost:5000/guide` | No |
 | **Resources** | `http://localhost:5000/resources` | No |
 | **Pricing** | `http://localhost:5000/pricing` | No |
