@@ -1643,6 +1643,7 @@ def pricing():
                 --light: #e0e0e0;
                 --gray: #1a1a1a;
                 --card-bg: rgba(0, 59, 0, 0.2);
+                --support: #00c244; /* CashApp green */
             }
             body {
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -1700,7 +1701,7 @@ def pricing():
                 color: var(--secondary);
                 margin-bottom: 20px;
             }
-            .pricing-card {
+            .pricing-card, .support-card {
                 background: var(--card-bg);
                 border-radius: 12px;
                 padding: 30px;
@@ -1710,7 +1711,7 @@ def pricing():
                 border: 1px solid rgba(0, 255, 65, 0.2);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             }
-            .pricing-card h2 {
+            .pricing-card h2, .support-card h2 {
                 color: var(--primary);
                 margin-top: 0;
             }
@@ -1728,20 +1729,30 @@ def pricing():
                 margin: 10px 0;
                 color: #ccc;
             }
-            .cta-button {
+            .cta-button, .support-button {
                 display: inline-block;
                 margin-top: 20px;
                 padding: 12px 25px;
-                background: var(--primary);
-                color: var(--black);
                 text-decoration: none;
                 border-radius: 8px;
                 font-weight: bold;
                 transition: all 0.3s ease;
             }
+            .cta-button {
+                background: var(--primary);
+                color: var(--black);
+            }
             .cta-button:hover {
                 transform: translateY(-3px);
                 box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .support-button {
+                background: var(--support);
+                color: var(--black);
+            }
+            .support-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 194, 68, 0.4);
             }
             .note {
                 margin-top: 30px;
@@ -1763,18 +1774,7 @@ def pricing():
     </head>
     <body>
     <!-- ========== Navigation Bar ========== -->
-    <nav style="
-        background: rgba(0, 59, 0, 0.3);
-        padding: 12px 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(0, 255, 65, 0.2);
-    ">
+    <nav>
         <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
@@ -1808,6 +1808,15 @@ def pricing():
                 </a>
             </div>
 
+            <!-- Support Card (separate section) -->
+            <div class="support-card">
+                <h2><i class="fas fa-hand-holding-heart"></i> Support the Project</h2>
+                <p>If you’d like to help keep CyborgSecurity alive and growing, you can contribute directly:</p>
+                <a href="https://cash.app/$PersianEmpireGoods/" class="cta-button" target="_blank">
+                    <i class="fas fa-dollar-sign"></i> Support via CashApp
+                </a>
+            </div>
+
             <div class="note">
                 <p>
                     <strong>Note:</strong> CyborgSecurity is a simulation prototype developed for educational and research purposes. 
@@ -1823,6 +1832,7 @@ def pricing():
     </body>
     </html>
     ''')
+
 
 # ========== Resources Page ==========
 @app.route('/resources')
@@ -1957,7 +1967,8 @@ def resources():
         <a href="/contact" style="color: var(--primary); text-decoration: none;">Contact</a>
     </nav>
 
-        <div class="container">
+        
+                <div class="container">
             <header>
                 <h1><i class="fas fa-brain"></i> The Future of Cyber-Medical Security</h1>
                 <p class="tagline">Understanding neural implants, medical devices, and the need for advanced protection.</p>
@@ -2017,7 +2028,29 @@ def resources():
                     This app is designed to <strong>educate, simulate, and inspire</strong> future developers and security researchers on the importance of securing human-machine interfaces.
                 </p>
             </div>
-        </div>
+
+            <!-- ✅ Moved inside .container -->
+            <div class="section">
+                <h2>🧬 Kazemi Cancer Research Assistant</h2>
+                <p>
+                    The <strong>Kazemi Cancer Research Assistant</strong> is a web-based oncology platform built by Sām Kazemi in 2025. 
+                    It integrates clinical trial matching, drug interaction checks, and survival analysis tools with interactive dashboards to make cancer research more accessible and data-driven.
+                </p>
+                <p>
+                    Kazemi also seeks to intersect this project with <strong>CyborgSecurity</strong>, creating an ecosystem of cyber-medical technologies that blend medicine, computer science, and cybersecurity knowledge. 
+                    The goal is to empower researchers, educators, and patients with tools that support both health innovation and digital safety.
+                </p>
+                <p>
+                    <strong>Learn more:</strong>
+                    <ul>
+                        <li><a href="https://github.com/youngsassanid/kazemi-cancer-research-assistant/tree/main" class="external-link" target="_blank">GitHub Repository (Demo)</a></li>
+                        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7392189/" class="external-link" target="_blank">Survival Analysis in Oncology (NCBI)</a></li>
+                    </ul>
+                </p>
+            </div>
+        </div> <!-- closes .container -->
+
+
 
         <div class="footer">
             <p>CyborgSecurity | Preparing for the future of human-machine integration</p>
@@ -2413,6 +2446,14 @@ def about():
             <p>Proud of his Iranian heritage, Sām is committed to advancing his community through <strong>education, cultural awareness, and advocacy</strong>, blending his technical 
             expertise and personal discipline to inspire success grounded in identity and values.</p>
             </div>
+                        <div class="social-buttons">
+                <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="social-button" target="_blank">
+                    <i class="fab fa-linkedin"></i> View LinkedIn Profile
+                </a>
+                <a href="https://github.com/youngsassanid/cyborgsecurity" class="social-button" target="_blank">
+                    <i class="fab fa-github"></i> View GitHub Repository
+                </a>
+            </div>
             </section>
 
             <!-- Section 2: Real-World Inspiration -->
@@ -2446,15 +2487,6 @@ def about():
                 <p><strong>This is the GOAT Ethos.</strong> And CyborgSecurity is his war cry.</p>
             </section>
 
-
-            <div class="social-buttons">
-                <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="social-button" target="_blank">
-                    <i class="fab fa-linkedin"></i> View LinkedIn Profile
-                </a>
-                <a href="https://github.com/youngsassanid/cyborgsecurity" class="social-button" target="_blank">
-                    <i class="fab fa-github"></i> View GitHub Repository
-                </a>
-            </div>
         </div>
 
         <div class="footer">
@@ -2854,3 +2886,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
