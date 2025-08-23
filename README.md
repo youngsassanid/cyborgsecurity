@@ -139,7 +139,7 @@ Or follow the interactive prompt to toggle debug mode.
 
 ---
 
-## 🧠 Implant Simulation
+## Implant Simulation
 
 The system simulates a **NeuroLink V3** implant, but you can extend the `CyborgInterface` class to model:
 
