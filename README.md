@@ -43,14 +43,13 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
 - **`/threat-intel`** – Simulated threat intelligence feed with:
   - Dynamic threat injection
   - Search and filter by type/severity
-- **`/goat-mode`** – **GOAT Mode (Greatest of All Time Mode)**:
+- **`/goat-mode`** – **GOAT Mode**:
   - Emergency airgap activation (disables all wireless interfaces)
   - Zero-trust enforcement for critical commands
   - Memory and firmware integrity verification
   - Neural consent requirement for system changes
   - Immutable audit logging
   - Hardware-level isolation simulation
-  - *Accessed via dashboard or directly at `/goat-mode`*
 - **`/health`** – **Health Monitor**:
   - Real-time display of **vital signs** (heart rate, oxygen saturation, neural sync)
   - System diagnostics (battery, thermal output, signal noise)
@@ -130,8 +129,8 @@ Once running, open your browser and visit:
 | **Dashboard** | `http://localhost:5000/dashboard` | Yes (`admin` / `cyborg123`) |
 | **Threat Intel** | `http://localhost:5000/threat-intel` | Yes (`admin` / `cyborg123`) |
 | **Unit Tests** | `http://localhost:5000/test` | No |
-| **GOAT Mode** | `https://localhost:5000/goat-mode` | Yes |
-| **Health Monitor** | `https://localhost:5000/health` | Yes |
+| **GOAT Mode** | `https://localhost:5000/goat-mode` | Yes (`admin` / `cyborg123`) |
+| **Health Monitor** | `https://localhost:5000/health` | Yes (`admin` / `cyborg123`) |
 | **Setup Guide** | `http://localhost:5000/guide` | No |
 | **Resources** | `http://localhost:5000/resources` | No |
 | **Pricing** | `http://localhost:5000/pricing` | No |
