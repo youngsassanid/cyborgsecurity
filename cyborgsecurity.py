@@ -35,6 +35,9 @@ import unittest
 import html
 import subprocess
 from datetime import datetime, timedelta
+from flask import Flask, render_template_string, jsonify
+from datetime import datetime
+import logging
 
 # ========== Logger Setup ==========
 logging.basicConfig(
@@ -683,10 +686,11 @@ MAIN_PAGE_HTML = '''
             }
         }
         .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 15px; /* Minimal vertical padding */
+    text-align: center;
+}
         .hero-title {
             font-size: 3.5rem;
             margin-bottom: 20px;
@@ -713,8 +717,8 @@ MAIN_PAGE_HTML = '''
             display: inline-block;
             background: linear-gradient(145deg, var(--primary), var(--secondary));
             color: var(--black);
-            padding: 18px 45px;
-            font-size: 1.2rem;
+            padding: 10px 35px;
+            font-size: 1rem;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
@@ -723,7 +727,7 @@ MAIN_PAGE_HTML = '''
             transition: all 0.3s ease;
             border: none;
             box-shadow: 0 8px 25px rgba(0, 255, 65, 0.4);
-            margin-top: 20px;
+            margin-top: 8px;
         }
         .hero-button:hover {
             transform: translateY(-3px) scale(1.03);
@@ -762,7 +766,7 @@ MAIN_PAGE_HTML = '''
                 <img src="/favicon.png" alt="CyborgSecurity Logo" class="hero-logo">
 
                 <h1 class="hero-title glow">CyborgSecurity</h1>
-                <p class="hero-subtitle">Protecting next-generation cyber-medical systems from sophisticated cyber threats</p>
+                <p class="hero-subtitle">Protecting next-generation medical implants from sophisticated cyber threats</p>
                 <!-- <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p> -->
                 <a href="/dashboard" class="hero-button">
                     <i class="fas fa-shield-alt"></i> Access Security Dashboard
@@ -770,6 +774,24 @@ MAIN_PAGE_HTML = '''
                 <a href="/threat-intel" class="hero-button" style="background: linear-gradient(145deg, var(--purple), #6a0dad); margin-top: 15px;">
     <i class="fas fa-globe"></i> Open Threat Intelligence
                 </a>
+                <a href="/goat-mode" class="hero-button" style="
+    background: linear-gradient(145deg, #00e6b8, #00a88a); 
+    color: var(--black); 
+    margin-top: 15px; 
+    box-shadow: 0 8px 25px rgba(0, 230, 184, 0.5);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+">
+    <i class="fas fa-crown"></i> ACTIVATE GOAT MODE
+</a>
+               <a href="/health" class="hero-button" style="
+    background: linear-gradient(145deg, #4b6cb7, #6a8ddc);
+    color: var(--black);
+    margin-top: 15px;
+    box-shadow: 0 8px 25px rgba(75, 108, 183, 0.5);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+">
+    <i class="fas fa-stethoscope"></i> Run Health Monitor
+</a> 
             </div>
         </header>
 
@@ -1051,7 +1073,6 @@ def dashboard():
                 <h1><i class="fas fa-shield-alt"></i> CyborgSecurity Dashboard</h1>
                 <p>Real-Time Threat Monitoring for Neural Implants</p>
             </header>
-
             <div class="device-info">
                 <strong>Implant Type:</strong> {{ implant_type }} |
                 <strong>Device ID:</strong> {{ device_id }} |
@@ -1117,7 +1138,10 @@ def dashboard():
             </div>
 
             <div class="footer">
-                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | 
+                <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> 
+                | <a href="/goat-mode" style="color:var(--primary)">GOAT Mode</a> | 
+                <a href="/health" style="color:var(--primary)">Health Monitor</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
             </div>
         </div>
 
@@ -1511,7 +1535,9 @@ def threat_intel():
             </div>
 
             <div class="footer">
-                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Home</a> | <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | 
+                <a href="/goat-mode" style="color:var(--primary)">GOAT Mode</a> | 
+                <a href="/health" style="color:var(--primary)">Health Monitor</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
             </div>
         </div>
 
@@ -1619,6 +1645,504 @@ def threat_intel():
     </body>
     </html>
     ''', threats=sample_threats, now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+# ========= GOAT Mode ==========
+@app.route('/goat-mode')
+@requires_auth
+def goat_mode():
+    goat_status = {
+        "active": True,
+        "airgapped": False,
+        "secure_enclave_healthy": True,
+        "neural_consent_required": True,
+        "last_verified": datetime.now().isoformat(),
+        "critical_commands_blocked": 7,
+        "memory_integrity_checks": "Passed",
+        "firmware_signature": "Valid",
+        "wireless_interface": "Secured",
+        "audit_log_integrity": "Immutable"
+    }
+
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GOAT Mode | CyborgSecurity</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --primary: #00ff41; --secondary: #008f11; --dark: #003b00; --darker: #001a00;
+        --black: #000000; --gray: #1a1a1a; --critical: #ff0033; --warning: #ffaa00;
+        --info: #00aaff; --success: #00cc00; --goat: #00ff41;
+    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, var(--black), var(--darker)); color: #e0e0e0; margin:0; padding:20px; line-height:1.7; }
+    .container { max-width:1200px; margin:0 auto; }
+    header { text-align:center; padding:30px; background:rgba(0,59,0,0.2); border-radius:15px; margin-bottom:30px; border:1px solid var(--secondary); }
+    h1 { font-size:2.8rem; color: var(--goat); }
+    .subtitle { font-size:1.1rem; color: var(--secondary); margin-bottom:20px; }
+    .status-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin:20px 0; }
+    .status-card { background:rgba(0,59,0,0.2); border-radius:12px; padding:20px; border:1px solid rgba(0,255,65,0.2); box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+    .status-card h3 { color:var(--primary); margin-bottom:12px; font-size:1.2rem; }
+    .status-item { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.95rem; }
+    .status-label { color:var(--secondary); }
+    .status-value { font-weight:600; color: var(--primary); }
+    .status-value.good { color: var(--success); }
+    .status-value.bad { color: var(--critical); }
+    .pulse { animation:pulse 1.5s ease-in-out 1; }
+    @keyframes pulse { 0% {opacity:0.3;} 50% {opacity:1;} 100% {opacity:0.3;} }
+
+    .controls { display:flex; flex-wrap:wrap; gap:15px; margin:30px 0; padding:15px; background:rgba(0,59,0,0.2); border-radius:12px; border:1px solid rgba(0,143,17,0.3); }
+    .controls button { padding:12px 18px; border:none; border-radius:8px; font-size:1rem; font-weight:bold; cursor:pointer; transition:all 0.3s ease; flex:1; min-width:160px; }
+    .controls button:hover { transform:translateY(-2px); box-shadow:0 5px 15px rgba(0,255,65,0.4); }
+    .btn-airgap { background: var(--critical); color:white; }
+    .btn-audit { background: var(--info); color:white; }
+    .btn-verify { background: var(--primary); color: var(--black); }
+
+    .footer { text-align:center; margin-top:60px; padding:20px; border-top:1px solid var(--secondary); color:var(--secondary); font-size:0.9rem; }
+
+    .airgap-banner { display:none; background:var(--critical); color:#fff; text-align:center; padding:10px; border-radius:8px; margin-bottom:20px; font-weight:bold; }
+    .airgap-active { display:block; }
+
+    @media (max-width:768px) { .controls { flex-direction:column; } .controls button { width:100%; } }
+</style>
+</head>
+<body>
+<div class="container">
+    <div id="airgapBanner" class="airgap-banner">⚠️ AIRGAP ACTIVE: Wireless Interfaces Disabled</div>
+    <header>
+        <h1><i class="fas fa-crown"></i> GOAT Mode: Active</h1>
+        <p class="subtitle">Zero-Trust Protection for Human-Machine Interfaces</p>
+    </header>
+
+    <div class="status-grid">
+        <div class="status-card">
+            <h3>System Integrity</h3>
+            <div class="status-item"><span class="status-label">Secure Enclave:</span><span id="enclave" class="status-value good">Healthy</span></div>
+            <div class="status-item"><span class="status-label">Memory Shield:</span><span id="memory" class="status-value good">Verified</span></div>
+            <div class="status-item"><span class="status-label">Firmware:</span><span id="firmware" class="status-value good">Signed & Valid</span></div>
+            <div class="status-item"><span class="status-label">Audit Log:</span><span id="audit" class="status-value good">Immutable</span></div>
+        </div>
+        <div class="status-card">
+            <h3>Access Control</h3>
+            <div class="status-item"><span class="status-label">Wireless Interface:</span><span id="wireless" class="status-value">Secured</span></div>
+            <div class="status-item"><span class="status-label">Neural Consent:</span><span id="neural" class="status-value">Required</span></div>
+            <div class="status-item"><span class="status-label">Last Verified:</span><span id="lastVerified">{{ status.last_verified.split('T')[1].split('.')[0] }}</span></div>
+            <div class="status-item"><span class="status-label">Critical Blocks:</span><span id="criticalBlocks">{{ status.critical_commands_blocked }}</span></div>
+        </div>
+        <div class="status-card">
+            <h3>Live Defense</h3>
+            <div class="status-item"><span class="status-label">Spoofed Signals:</span><span id="spoof" class="status-value good">Blocked</span></div>
+            <div class="status-item"><span class="status-label">Replay Attacks:</span><span id="replay" class="status-value good">Blocked</span></div>
+            <div class="status-item"><span class="status-label">Clock Tampering:</span><span id="clock" class="status-value good">Detected & Rejected</span></div>
+            <div class="status-item"><span class="status-label">AI Override:</span><span id="ai" class="status-value good">Denied</span></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="airgapBtn" onclick="toggleAirgap()" class="btn-airgap">
+            <i class="fas fa-radiation"></i> EMERGENCY AIRGAP
+        </button>
+        <button onclick="viewAuditLog()" class="btn-audit"><i class="fas fa-book"></i> View Audit Log</button>
+        <button onclick="verifyIntegrity()" class="btn-verify"><i class="fas fa-shield-alt"></i> Verify System</button>
+    </div>
+
+    <div class="footer">
+        <p>
+            GOAT Mode enforces <strong>zero-trust signal validation</strong>, <strong>neural consent</strong>, and <strong>hardware-enforced isolation</strong>.<br>
+            No command executes without cryptographic + biological verification.
+        </p>
+        <p>
+            <a href="/" style="color:var(--info)">← Back to Home</a> |
+            <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> |
+            <a href="/health" style="color:var(--primary)">Health Monitor</a> | Last updated: <span id="lastUpdate">{{ now }}</span>
+        </p>
+    </div>
+</div>
+
+<script>
+const status = {{ status|tojson }};
+
+function toggleAirgap() {
+    const banner = document.getElementById('airgapBanner');
+    const btn = document.getElementById('airgapBtn');
+    const isActive = banner.classList.contains('airgap-active');
+
+    if(!isActive) {
+        if(confirm("⚠️ ACTIVATE AIRGAP MODE? This will disable ALL wireless communication. Proceed?")) {
+            fetch('/api/goat-mode/airgap', { method:'POST' })
+            .then(r => r.json())
+            .then(data => {
+                banner.classList.add('airgap-active');
+                btn.textContent = "DEACTIVATE AIRGAP";
+                alert("🛡️ AIRGAP ACTIVE: You are now isolated.");
+            });
+        }
+    } else {
+        if(confirm("Deactivate Airgap? This will restore wireless communication.")) {
+            fetch('/api/goat-mode/airgap/deactivate', { method:'POST' })
+            .then(r => r.json())
+            .then(data => {
+                banner.classList.remove('airgap-active');
+                btn.textContent = "EMERGENCY AIRGAP";
+                alert("✅ Airgap deactivated. Wireless interfaces restored.");
+            });
+        }
+    }
+}
+
+function viewAuditLog() {
+    alert("🔐 Audit Log:\\n\\n- [14:22] Blocked firmware update (invalid signature)\\n- [14:19] Rejected neural reprogramming attempt\\n- [14:15] Detected spoofed pacemaker signal\\n- [14:10] Clock tampering alert\\n\\nAll events cryptographically signed and immutable.");
+}
+
+function verifyIntegrity() {
+    const checks = [
+        "Secure Enclave: OK",
+        "Memory Fingerprint: MATCH",
+        "Firmware Signature: VALID",
+        "Neural Consent Module: READY",
+        "Communication Stack: CLEAN"
+    ];
+    alert("✅ System Integrity Verified:\\n\\n" + checks.join("\\n"));
+}
+
+// Live simulation
+setInterval(() => {
+    document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+    const blocksElem = document.getElementById('criticalBlocks');
+    let blocks = parseInt(blocksElem.textContent);
+    if(Math.random()<0.2){ blocks+=1; blocksElem.textContent=blocks; blocksElem.classList.add('pulse'); setTimeout(()=>blocksElem.classList.remove('pulse'),1500);}
+}, 5000);
+</script>
+</body>
+</html>
+''', status=goat_status, now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+@app.route('/api/goat-mode/airgap', methods=['POST'])
+@requires_auth
+def api_goat_mode_airgap():
+    logging.info("GOAT Mode: Emergency airgap activated. All wireless interfaces disabled.")
+    return jsonify({"status":"airgapped","message":"All wireless communication disabled.","timestamp":datetime.now().isoformat()})
+
+@app.route('/api/goat-mode/airgap/deactivate', methods=['POST'])
+@requires_auth
+def api_goat_mode_airgap_deactivate():
+    logging.info("GOAT Mode: Airgap deactivated. Wireless interfaces restored.")
+    return jsonify({"status":"active","message":"Wireless communication restored.","timestamp":datetime.now().isoformat()})
+
+# ========= Health Monitor Page ==========
+@app.route('/health')
+@requires_auth
+def health_monitor():
+    # Simulated real-time health metrics
+    health_data = [
+        {"metric": "Heart Rate", "value": f"{random.randint(60, 100)} BPM", "status": "normal"},
+        {"metric": "Neural Sync", "value": f"{random.randint(92, 99)}%", "status": "normal"},
+        {"metric": "Cognitive Load", "value": f"{random.randint(25, 65)}%", "status": "normal"},
+        {"metric": "Battery Level", "value": f"{random.randint(80, 99)}%", "status": "normal"},
+        {"metric": "Oxygen Saturation", "value": f"{random.randint(96, 100)}%", "status": "normal"},
+        {"metric": "Thermal Output", "value": f"{round(random.uniform(36.2, 37.6), 1)}°C", "status": "normal"},
+        {"metric": "Signal Noise Ratio", "value": f"{round(random.uniform(1.3, 2.0), 2)} dB", "status": "normal"},
+        {"metric": "Memory Integrity", "value": "OK", "status": "normal"},
+        {"metric": "Firmware Version", "value": "v2.1.8-secure", "status": "normal"},
+        {"metric": "Clock Drift", "value": f"+{round(random.uniform(-0.004, 0.004), 4)}s", "status": "normal"},
+    ]
+
+    # System statuses
+    system_status = {
+        "Secure Enclave": "Active",
+        "Neural Firewall": "Enabled",
+        "Auto-Remediation": "Online",
+        "Wireless Encryption": "AES-256",
+        "Audit Log": "Immutable",
+        "Consent Module": "Ready"
+    }
+
+    # Recent health events
+    recent_events = [
+        {"time": "14:23", "event": "Microglial firewall triggered", "type": "security"},
+        {"time": "14:21", "event": "Cognitive load peak detected", "type": "warning"},
+        {"time": "14:19", "event": "Firmware self-check passed", "type": "info"},
+        {"time": "14:17", "event": "Signal drift corrected", "type": "security"},
+        {"time": "14:15", "event": "Bluetooth LE heartbeat confirmed", "type": "info"},
+    ]
+
+    # Health score
+    health_score = random.randint(88, 100)
+
+    return render_template_string('''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Health Monitor | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/favicon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --gray: #1a1a1a;
+                --light-gray: #2a2a2a;
+                --critical: #ff0033;
+                --warning: #ffaa00;
+                --info: #00aaff;
+                --success: #00cc00;
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: #e0e0e0;
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                padding: 30px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .device-info {
+                background: linear-gradient(145deg, var(--dark), var(--darker));
+                padding: 18px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                font-size: 1.1rem;
+            }
+            .health-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 18px;
+                margin: 20px 0;
+            }
+            .metric-card {
+                background: rgba(0, 59, 0, 0.2);
+                border-left: 6px solid var(--info);
+                padding: 16px;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            }
+            .metric-card.normal { border-left-color: var(--success); }
+            .metric-card.warning { border-left-color: var(--warning); }
+            .metric-card.critical { border-left-color: var(--critical); }
+
+            .metric-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            .metric-name {
+                font-size: 1.1rem;
+            }
+            .metric-status {
+                font-size: 0.9rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 3px 8px;
+                border-radius: 5px;
+            }
+            .metric-value {
+                font-size: 1.4rem;
+                font-weight: bold;
+                margin-top: 6px;
+                color: #fff;
+            }
+            .section-title {
+                font-size: 1.5rem;
+                color: var(--primary);
+                margin: 30px 0 15px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid var(--secondary);
+            }
+            .status-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 14px;
+                margin: 15px 0;
+            }
+            .status-item {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 14px;
+                border-radius: 8px;
+                font-size: 1rem;
+            }
+            .status-label {
+                font-weight: 600;
+                color: var(--gray);
+            }
+            .status-value {
+                color: var(--primary);
+                font-weight: 500;
+            }
+            .events-list {
+                margin-top: 20px;
+            }
+            .event {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 12px;
+                margin: 10px 0;
+                border-radius: 8px;
+                border-left: 4px solid var(--info);
+                display: flex;
+                align-items: center;
+                font-size: 0.95rem;
+            }
+            .event.security { border-left-color: var(--primary); }
+            .event.warning { border-left-color: var(--warning); }
+            .event.info { border-left-color: var(--success); }
+            .event-time {
+                font-weight: bold;
+                color: var(--secondary);
+                min-width: 60px;
+                margin-right: 10px;
+            }
+            .badge {
+                font-size: 0.75rem;
+                padding: 2px 6px;
+                border-radius: 10px;
+                margin-left: 8px;
+            }
+            .badge.security { background: var(--primary); color: var(--black); }
+            .badge.warning { background: var(--warning); color: var(--black); }
+            .badge.info { background: var(--success); color: var(--black); }
+            .health-score {
+                font-size: 3.5rem;
+                font-weight: bold;
+                color: var(--primary);
+                text-align: center;
+                margin: 30px 0;
+                text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            }
+            footer {
+                text-align: center;
+                padding: 40px 0;
+                border-top: 1px solid var(--secondary);
+                color: var(--secondary);
+                font-size: 1rem;
+                margin-top: 60px;
+            }
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 25px;
+                margin-bottom: 20px;
+                font-weight: 500;
+            }
+            .nav-links a {
+                color: var(--info);
+                text-decoration: none;
+            }
+            .nav-links a:hover {
+                text-decoration: underline;
+            }
+            @media (max-width: 768px) {
+                .health-grid, .status-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-heart-pulse"></i> Health Monitor</h1>
+                <p>Real-Time Biomedical & System Diagnostics for Neural Implants</p>
+            </header>
+
+            <div class="device-info">
+                <strong>Implant Type:</strong> {{ implant_type }} |
+                <strong>Device ID:</strong> {{ device_id }} |
+                <strong>Last Sync:</strong> <span id="current-time">{{ now }}</span>
+            </div>
+
+            <div class="health-score">
+                {{ health_score }}/100
+            </div>
+
+            <h2 class="section-title"><i class="fas fa-heartbeat"></i> Vital Signs</h2>
+            <div class="health-grid">
+                {% for item in health_data %}
+                <div class="metric-card metric-card-{{ 'critical' if 'fail' in item.value.lower() else 'warning' if 'warn' in item.value.lower() else 'normal' }}">
+                    <div class="metric-header">
+                        <span class="metric-name">{{ item.metric }}</span>
+                        <span class="metric-status">{{ 'OK' if 'fail' not in item.value.lower() else 'ERROR' }}</span>
+                    </div>
+                    <div class="metric-value">{{ item.value }}</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h2 class="section-title"><i class="fas fa-microchip"></i> System Status</h2>
+            <div class="status-grid">
+                {% for label, value in system_status.items() %}
+                <div class="status-item">
+                    <span class="status-label">{{ label }}</span>
+                    <span class="status-value">{{ value }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h2 class="section-title"><i class="fas fa-list"></i> Recent Neural Events</h2>
+            <div class="events-list">
+                {% for event in recent_events %}
+                <div class="event event-{{ event.type }}">
+                    <span class="event-time">{{ event.time }}</span>
+                    <span>{{ event.event }}
+                        <span class="badge {{ event.type }}">{{ event.type | title }}</span>
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <footer>
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">← Back to Home</a> | 
+                <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | 
+                <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> | 
+                <a href="/goat-mode" style="color:var(--primary)">GOAT Mode</a> | 
+                Last updated: <span id="lastUpdate">{{ now }}</span></p>
+            </footer>
+        </div>
+
+        <script>
+            // Auto-update time
+            function updateTime() {
+                const now = new Date();
+                document.getElementById('current-time').textContent = now.toLocaleString();
+                document.getElementById('lastUpdate').textContent = now.toLocaleString();
+            }
+            setInterval(updateTime, 1000);
+            updateTime();
+        </script>
+    </body>
+    </html>
+    ''',
+    health_data=health_data,
+    system_status=system_status,
+    recent_events=recent_events,
+    health_score=health_score,
+    implant_type=monitor_instance.interface.implant_type,
+    device_id=monitor_instance.interface.device_id,
+    now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 # ========== Pricing Page ==========
 @app.route('/pricing')
@@ -2873,6 +3397,8 @@ def main():
     print("[INFO] Visit http://localhost:5000 for the main page")
     print("[INFO] Visit http://localhost:5000/dashboard for the protected dashboard")
     print("[INFO] Visit http://localhost:5000/threat-intel for the threat intelligence feed")
+    print("[INFO] Visit http://localhost:5000/goat-mode for GOAT mode")
+    print("[INFO] Visit http://localhost:5000/health for the health monitor")
     print("[INFO] Dashboard login - username: admin, password: cyborg123")
     print("[INFO] Press Ctrl+C to stop the server.")
     
@@ -2886,4 +3412,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
