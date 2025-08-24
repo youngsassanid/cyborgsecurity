@@ -18,6 +18,8 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
 - Provides a **comprehensive educational hub** on neural and medical implants  
 - Supports **contact and feedback** via integrated email form  
 - All secure pages protected with **authentication (admin/cyborg123)**  
+- Activates **GOAT Mode** — zero-trust emergency lockdown for critical threats  
+- Monitors **biomedical health metrics** in real time via the Health Monitor  
 
 ---
 
@@ -28,6 +30,7 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
 - Implements statistical anomaly detection (mean ± 3σ)
 - Detects packet tampering, replay attacks, and memory corruption
 - Generates realistic threat alerts with timestamps and severity
+- Includes **auto-remediation triggers** for critical threats
 
 ### Multi-Page Web Console
 - **`/`** – Cyberpunk-themed landing page with project overview
@@ -40,6 +43,21 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
 - **`/threat-intel`** – Simulated threat intelligence feed with:
   - Dynamic threat injection
   - Search and filter by type/severity
+- **`/goat-mode`** – **GOAT Mode (Greatest of All Time Mode)**:
+  - Emergency airgap activation (disables all wireless interfaces)
+  - Zero-trust enforcement for critical commands
+  - Memory and firmware integrity verification
+  - Neural consent requirement for system changes
+  - Immutable audit logging
+  - Hardware-level isolation simulation
+  - *Accessed via dashboard or directly at `/goat-mode`*
+- **`/health`** – **Health Monitor**:
+  - Real-time display of **vital signs** (heart rate, oxygen saturation, neural sync)
+  - System diagnostics (battery, thermal output, signal noise)
+  - Firmware and memory health status
+  - Recent neural events with severity tagging
+  - Overall health score (88–100)
+  - *Perfect for monitoring both physiological and cybernetic well-being*
 - **`/pricing`** – Transparent open-source licensing
 - **`/resources`** – Educational hub on:
   - Neuralink and brain-computer interfaces
@@ -47,6 +65,9 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
   - Implant security best practices
   - Links to OWASP, NIST, IEEE, and FDA
 - **`/contact`** – Functional contact form that sends emails via `smtplib`
+- **`/guide`** – Step-by-step setup and usage guide
+- **`/about`** – Project origin, ethics, and the GOAT ethos
+- **`/test`** – Unit test runner and download
 
 ### Security & Architecture
 - **End-to-end alert encryption** using Fernet (AES)
@@ -54,9 +75,11 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
 - **Real-time interactivity** with JavaScript filtering and auto-refresh
 - **Unit-tested core logic** for reliability
 - **Modular design** for easy extension
+- **Emergency isolation** via GOAT Mode API endpoints
 
 ### UI/UX
 - **Cyberpunk aesthetic** with glowing green borders, laser effects, and pulse animations
+- **Consistent GOAT branding** — bold, defiant, elite
 - **Responsive design** for desktop and mobile
 - **Consistent navigation** across all pages
 - **Professional, immersive experience** resembling a real SOC (Security Operations Center)
@@ -107,6 +130,8 @@ Once running, open your browser and visit:
 | **Dashboard** | `http://localhost:5000/dashboard` | Yes (`admin` / `cyborg123`) |
 | **Threat Intel** | `http://localhost:5000/threat-intel` | Yes (`admin` / `cyborg123`) |
 | **Unit Tests** | `http://localhost:5000/test` | No |
+| **GOAT Mode** | `https://localhost:5000/goat-mode` | Yes |
+| **Health Monitor** | `https://localhost:5000/health` | Yes |
 | **Setup Guide** | `http://localhost:5000/guide` | No |
 | **Resources** | `http://localhost:5000/resources` | No |
 | **Pricing** | `http://localhost:5000/pricing` | No |
