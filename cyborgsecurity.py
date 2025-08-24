@@ -818,6 +818,8 @@ MAIN_PAGE_HTML = '''
                 <li>Logs alerts to encrypted JSON and CSV files</li>
                 <li>Sends alerts to a local Flask dashboard</li>
                 <li>Supports encrypted alert logging and future email notifications</li>
+                <li>Includes zero-trust emergency lockdown for critical threats</li>
+                <li>Monitors biomedical health metrics in real time via the Health Monitor</li>
             </ul>
         </section>
         <section class="features">
@@ -870,6 +872,10 @@ MAIN_PAGE_HTML = '''
                 <li><strong>Cyborg Simulation:</strong> Emulates biosignals and I/O traffic for implantable devices</li>
                 <li><strong>Threat Detection:</strong> Identifies spoofed, replayed, and tampered data</li>
                 <li><strong>Flask Web Dashboard:</strong> View alerts and implant type in real time</li>
+                <li><strong>Unit Testing Integration:</strong> Verify core security logic and ensure code integrity</li>
+                <li><strong>Dynamic Threat Injection:</strong> Searchable, filterable attack data for training and demonstration</li>
+                <li><strong>GOAT Mode:</strong> Emergency zero-trust lockdown API endpoints</li>
+                <li><strong>Health Monitoring:</strong> Real-time biomedical health metric monitoring</li>
                 <li><strong>Email Placeholder:</strong> Easily extend to send alerts via email</li>
                 <li><strong>Logging:</strong> CSV, JSON, and plaintext logging of all anomalies</li>
                 <li><strong>Encryption:</strong> Alerts are encrypted using Fernet (symmetric AES)</li>
