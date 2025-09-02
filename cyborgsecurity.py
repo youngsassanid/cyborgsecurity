@@ -713,6 +713,16 @@ MAIN_PAGE_HTML = '''
             margin-left: auto;
             margin-right: auto;
         }
+        .purple-glow {
+    background: linear-gradient(145deg, var(--purple), #6a0dad) !important;
+    color: white;
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.7) !important; /* purple idle glow */
+}
+.purple-glow:hover {
+    box-shadow: 0 12px 30px rgba(138, 43, 226, 0.8) !important; /* stronger purple hover glow */
+    transform: translateY(-3px) scale(1.03);
+}
+
         .hero-button {
             display: inline-block;
             background: linear-gradient(145deg, var(--primary), var(--secondary));
@@ -752,7 +762,7 @@ MAIN_PAGE_HTML = '''
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a> 
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
@@ -771,7 +781,7 @@ MAIN_PAGE_HTML = '''
                 <a href="/dashboard" class="hero-button">
                     <i class="fas fa-shield-alt"></i> Access Security Dashboard
                 </a>
-                <a href="/threat-intel" class="hero-button" style="background: linear-gradient(145deg, var(--purple), #6a0dad); margin-top: 15px;">
+                <a href="/threat-intel" class="hero-button purple-glow" style="background: linear-gradient(145deg, var(--purple), #6a0dad); margin-top: 15px;">
     <i class="fas fa-globe"></i> Open Threat Intelligence
                 </a>
                 <a href="/goat-mode" class="hero-button" style="
@@ -787,8 +797,8 @@ MAIN_PAGE_HTML = '''
     background: linear-gradient(145deg, #4b6cb7, #6a8ddc);
     color: var(--black);
     margin-top: 15px;
-    box-shadow: 0 8px 25px rgba(75, 108, 183, 0.5);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 25px rgba(75, 108, 183, 0.8);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 ">
     <i class="fas fa-stethoscope"></i> Run Health Monitor
 </a> 
@@ -899,7 +909,7 @@ MAIN_PAGE_HTML = '''
 '''
 
 @app.route('/')
-def home():
+def CyborgSecurity():
     return MAIN_PAGE_HTML
 
 @app.route('/dashboard')
@@ -2305,7 +2315,7 @@ def pricing():
     <body>
     <!-- ========== Navigation Bar ========== -->
     <nav>
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
@@ -2489,7 +2499,7 @@ def resources():
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
@@ -2507,7 +2517,7 @@ def resources():
             <div class="section">
                 <h2>🧠 What Is Neuralink?</h2>
                 <p>
-                    <strong>Neuralink</strong>, founded by Elon Musk, is developing ultra-high bandwidth brain-computer interfaces (BCIs) to connect the human brain directly to computers. 
+                    <strong>Neuralink</strong> is developing ultra-high bandwidth brain-computer interfaces (BCIs) to connect the human brain directly to computers. 
                     The goal is to treat neurological conditions (like Parkinson’s, epilepsy, and spinal cord injuries) and eventually enable humans to keep pace with artificial intelligence.
                 </p>
                 <p>
@@ -2580,11 +2590,9 @@ def resources():
             </div>
         </div> <!-- closes .container -->
 
-
-
         <div class="footer">
-            <p>CyborgSecurity | Preparing for the future of human-machine integration</p>
-            <p>Simulation prototype. Not for production use.</p>
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulartion prototype. Not for production use.</p>
         </div>
     </body>
     </html>
@@ -2719,7 +2727,7 @@ def guide():
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
@@ -2947,7 +2955,7 @@ def about():
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
@@ -3205,7 +3213,7 @@ def contact():
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(0, 255, 65, 0.2);
     ">
-        <a href="/" style="color: var(--primary); text-decoration: none;">Home</a>
+        <a href="/" style="color: var(--primary); text-decoration: none;">CyborgSecurity</a>
         <a href="/guide" style="color: var(--primary); text-decoration: none;">Setup Guide</a>
         <a href="/resources" style="color: var(--primary); text-decoration: none;">Resources</a>
         <a href="/pricing" style="color: var(--primary); text-decoration: none;">Pricing</a>
