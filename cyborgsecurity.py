@@ -57,7 +57,7 @@ DEBUG_MODE = False
 class CyborgInterface:
     def __init__(self, device_id):
         self.device_id = device_id
-        self.implant_type = "NeuraLink V3"
+        self.implant_type = "Connexus"
         self.signal_baseline = [random.gauss(50, 5) for _ in range(100)]
         self.traffic_log = []
         self.memory_fingerprint = self.generate_memory_fingerprint()
@@ -813,25 +813,10 @@ MAIN_PAGE_HTML = '''
         <section class="section">
             <h2>About CyborgSecurity</h2>
             <p>CyborgSecurity is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed 
-            for cyborg implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication 
+            for medical implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication 
             tampering, memory anomalies, and more — complete with real-time alert encryption, dashboard visualization, and an extensible architecture.</p>
         </section>
 
-        <section class="section">
-            <h2>What It Does</h2>
-            <ul>
-                <li>Monitors neural biosignals for spoofing, drift, and replay attacks</li>
-                <li>Validates data packet integrity and detects clock tampering</li>
-                <li>Verifies device memory fingerprints to prevent firmware-level hacks</li>
-                <li>Calculates threat severity scores for triage</li>
-                <li>Auto-remediates certain critical threats</li>
-                <li>Logs alerts to encrypted JSON and CSV files</li>
-                <li>Sends alerts to a local Flask dashboard</li>
-                <li>Supports encrypted alert logging and future email notifications</li>
-                <li>Includes zero-trust emergency lockdown for critical threats</li>
-                <li>Monitors biomedical health metrics in real time via the Health Monitor</li>
-            </ul>
-        </section>
         <section class="features">
             <div class="feature-card">
                 <div class="feature-icon">
@@ -877,21 +862,19 @@ MAIN_PAGE_HTML = '''
             </div>
         </section>
         <section class="section">
-            <h2>Features</h2>
-            <ul>
-                <li><strong>Cyborg Simulation:</strong> Emulates biosignals and I/O traffic for implantable devices</li>
-                <li><strong>Threat Detection:</strong> Identifies spoofed, replayed, and tampered data</li>
-                <li><strong>Flask Web Dashboard:</strong> View alerts and implant type in real time</li>
-                <li><strong>Unit Testing Integration:</strong> Verify core security logic and ensure code integrity</li>
-                <li><strong>Dynamic Threat Injection:</strong> Searchable, filterable attack data for training and demonstration</li>
-                <li><strong>GOAT Mode:</strong> Emergency zero-trust lockdown API endpoints</li>
-                <li><strong>Health Monitoring:</strong> Real-time biomedical health metric monitoring</li>
-                <li><strong>Email Placeholder:</strong> Easily extend to send alerts via email</li>
-                <li><strong>Logging:</strong> CSV, JSON, and plaintext logging of all anomalies</li>
-                <li><strong>Encryption:</strong> Alerts are encrypted using Fernet (symmetric AES)</li>
-                <li><strong>Debug Mode Toggle:</strong> Turn debug output on or off via terminal</li>
-            </ul>
-        </section>
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Cyborg Simulation:</strong> Emulates biosignals and I/O traffic for implantable devices</li>
+        <li><strong>Threat Detection:</strong> Identifies spoofed, tampered, or replayed data, calculates severity scores, and auto remediates critical threats</li>
+        <li><strong>Web Dashboard:</strong> Real-time alert monitoring and implant overview via Flask interface</li>
+        <li><strong>Health Monitoring:</strong> Tracks biomedical metrics in real time</li>
+        <li><strong>Logging & Encryption:</strong> Logs anomalies in CSV, JSON, or plaintext; alerts encrypted using Fernet (AES)</li>
+        <li><strong>Developer Tools:</strong> Unit testing integration and debug mode toggle</li>
+        <li><strong>Dynamic Threat Injection:</strong> Searchable and filterable attack data for training and demonstration</li>
+        <li><strong>GOAT Mode:</strong> Emergency zero-trust lockdown API endpoints</li>
+    </ul>
+</section>
+
         <section class="cta-section">
             <h2>Ready to Secure Your Cyborg Infrastructure?</h2>
             <p>Download CyborgSecurity today and protect your human-machine interfaces from advanced cyber threats</p>
@@ -925,7 +908,7 @@ def dashboard():
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>CyborgSecurity Dashboard</title>
+        <title>Dashboard | CyborgSecurity</title>
         <link rel="icon" type="image/png" href="/favicon.png">                     
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <style>
@@ -2514,27 +2497,48 @@ def resources():
                 <p class="tagline">Understanding neural implants, medical devices, and the need for advanced protection.</p>
             </header>
 
-            <div class="section">
-                <h2>🧠 What Is Neuralink?</h2>
-                <p>
-                    <strong>Neuralink</strong> is developing ultra-high bandwidth brain-computer interfaces (BCIs) to connect the human brain directly to computers. 
-                    The goal is to treat neurological conditions (like Parkinson’s, epilepsy, and spinal cord injuries) and eventually enable humans to keep pace with artificial intelligence.
-                </p>
-                <p>
-                    The Neuralink implant uses tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. 
-                    While revolutionary, this creates a new attack surface: if compromised, a hacker could potentially manipulate brain signals, steal neural data, or disable the device.
-                </p>
-                <p>
-                    <strong>Learn more:</strong>
-                    <ul>
-                        <li><a href="https://neuralink.com" class="external-link" target="_blank">Neuralink Official Site</a></li>
-                        <li><a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2313295" class="external-link" target="_blank">First Human Implant (NEJM)</a></li>
-                    </ul>
-                </p>
-            </div>
+<div class="section">
+    <h2>What Are Brain-Computer Interfaces?</h2>
+    <p>
+        <strong>Brain-Computer Interfaces (BCIs)</strong> are devices that connect the human brain directly to computers, enabling communication between neural activity and digital systems. 
+        They have the potential to treat neurological conditions (like Parkinson’s, epilepsy, and spinal cord injuries) and enhance human capabilities.
+    </p>
+    <p>
+        BCIs typically use tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. 
+        While revolutionary, this creates new cybersecurity challenges: if compromised, a hacker could potentially manipulate neural signals, steal sensitive brain data, or disrupt device functionality.
+    </p>
+    <p>
+        <strong>Learn more about BCIs:</strong>
+        <ul>
+            <li><a href="https://www.synchron.com/" class="external-link" target="_blank">Synchron – Minimally Invasive BCIs</a></li>
+            <li><a href="https://www.brain-gate.org/" class="external-link" target="_blank">BrainGate – Clinical BCI Research</a></li>
+            <li><a href="https://www.blackrockneurotech.com/" class="external-link" target="_blank">Blackrock Neurotech – Neural Implant Devices</a></li>
+        </ul>
+    </p>
+</div>
+
+<div class="section">
+    <h2>Major BCI & Medical Implant Platforms</h2>
+    <p>
+        There are several companies pioneering brain-computer interfaces and medical implants, each with unique approaches and devices. 
+        CyborgSecurity aims to protect the wider ecosystem, regardless of manufacturer.
+    </p>
+    <ul>
+        <li><strong>Neuralink</strong> – Ultra-high bandwidth BCIs designed to treat neurological conditions and eventually enhance human-AI interaction.</li>
+        <li><strong>Synchron</strong> – Minimally invasive “stentrode” BCIs implanted via blood vessels, reducing surgical risk.</li>
+        <li><strong>Paradromics</strong> – High-bandwidth neural implants focused on restoring communication for patients with paralysis.</li>
+        <li><strong>Blackrock Neurotech</strong> – Clinical-grade devices with decades of research in neuroprosthetics and BCIs.</li>
+        <li><strong>Precision Neuroscience</strong> – Founded by a former Neuralink co-founder, focusing on scalable neural implants.</li>
+        <li><strong>BrainGate</strong> – Pioneering research group developing implanted BCIs for restoring motor and communication functions.</li>
+    </ul>
+    <p>
+        By supporting all of these platforms, CyborgSecurity remains independent, neutral, and focused on delivering reliable cybersecurity for every user in the BCI and medical implant ecosystem.
+    </p>
+</div>
+
 
             <div class="section">
-                <h2>🏥 Cyber-Medical Implants: Pacemakers, Insulin Pumps & More</h2>
+                <h2>Cyber-Medical Implants: Pacemakers, Insulin Pumps & More</h2>
                 <p>
                     Devices like <strong>pacemakers</strong>, <strong>insulin pumps</strong>, and <strong>neurostimulators</strong> are already in widespread use and 
                     rely on wireless communication for monitoring and updates. 
@@ -2554,7 +2558,7 @@ def resources():
             </div>
 
             <div class="section">
-                <h2>🛡️ How CyborgSecurity Simulates Real Protection</h2>
+                <h2>How CyborgSecurity Simulates Real Protection</h2>
                 <p>
                     While CyborgSecurity is a simulation, it models real-world threats to neural and medical implants:
                 </p>
@@ -2571,7 +2575,7 @@ def resources():
 
             <!-- ✅ Moved inside .container -->
             <div class="section">
-                <h2>🧬 Kazemi Cancer Research Assistant</h2>
+                <h2>Kazemi Cancer Research Assistant</h2>
                 <p>
                     The <strong>Kazemi Cancer Research Assistant</strong> is a web-based oncology platform built by Sām Kazemi in 2025. 
                     It integrates clinical trial matching, drug interaction checks, and survival analysis tools with interactive dashboards to make cancer research more accessible and data-driven.
@@ -2607,7 +2611,7 @@ def guide():
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Guide | CyborgSecurity</title>
+        <title>Setup Guide | CyborgSecurity</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="icon" type="image/png" href="/favicon.png">
         <style>
@@ -2971,7 +2975,7 @@ def about():
 
             <!-- Section 1: The Developer -->
             <section class="section">
-                <h2>👤 The Developer</h2>
+                <h2>The Developer</h2>
                 <div class="author-bio">
             <img src="/sam.jpeg" alt="Sām Kazemi" 
              style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
@@ -2996,10 +3000,10 @@ def about():
 
             <!-- Section 2: Real-World Inspiration -->
             <section class="section">
-                <h2>🛡️ Inspired by Real-World Threats</h2>
+                <h2>Inspired by Real-World Threats</h2>
                 <p>CyborgSecurity was developed in response to <strong>real, life-threatening cybersecurity events</strong>, such as the <strong>FDA’s 2017 recall of 500,000 pacemakers</strong> 
                 due to vulnerabilities that could allow hackers to disable the devices or deliver fatal shocks.</p>
-                <p>As humans become increasingly integrated with technology—from neural implants like Neuralink to insulin pumps and prosthetics—securing these interfaces is not optional. It 
+                <p>As humans become increasingly integrated with technology—from neural implants to insulin pumps and prosthetics—securing these interfaces is not optional. It 
                 is a <strong>life-or-death necessity</strong>.</p>
                 <p>Through CyborgSecurity, Sām Kazemi explores this future from a technical and ethical perspective, building tools designed to safeguard the privacy and security of 
                 human-machine integration.</p>
@@ -3008,7 +3012,7 @@ def about():
 
             <!-- Section 3: Origin & The GOAT Ethos -->
             <section class="section">
-                <h2>🔥 The Origin: From Rejection to the GOAT</h2>
+                <h2>The Origin: From Rejection to the GOAT</h2>
             <img src="/the_goat.jpg" alt="The GOAT" 
              style="width:350px; height:auto; float:left; margin:0 20px 20px 0; border-radius:12px; border:2px solid var(--primary); box-shadow:0 0 15px rgba(0,255,65,0.5);">
                 <p>CyborgSecurity began as a dream — literally. But its true origin lies in <strong>rage, rejection, and relentless hunger for success</strong>.</p>
@@ -3228,34 +3232,52 @@ def contact():
     </header>
 
             <div class="card">
-                <h2>📬 Get in Touch</h2>
-                <form method="POST">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Your name" required>
+    <h2>📬 Get in Touch</h2>
+    <div class="contact-content">
+        <!-- Right side: Form -->
+        <form method="POST" class="contact-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
 
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
 
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
 
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
-            </div>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+    </div>
+</div>
 
-            <div class="card">
-                <p><strong>Email:</strong> <a href="mailto:mkazemi@sfsu.edu" style="color:var(--info)">mkazemi@sfsu.edu</a></p>
-                <p><strong>GitHub:</strong> <a href="https://github.com/youngsassanid" class="external-link" target="_blank">@youngsassanid</a></p>
-                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/" class="external-link" target="_blank">Sām Kazemi</a></p>
-            </div>
+<div class="card" style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+    <!-- Left side: Links -->
+    <div class="contact-info">
+        <p><strong>Email:</strong> 
+            <a href="mailto:mkazemi@sfsu.edu" style="color:var(--info)">mkazemi@sfsu.edu</a>
+        </p>
+        <p><strong>GitHub:</strong> 
+            <a href="https://github.com/youngsassanid" class="external-link" target="_blank">@youngsassanid</a>
+        </p>
+        <p><strong>LinkedIn:</strong> 
+            <a href="https://www.linkedin.com/company/cyborgsecurity-research/" class="external-link" target="_blank">CyborgSecurity Research</a>
+        </p>
+    </div>
 
-            <div class="social-links">
-                <a href="https://github.com/youngsassanid"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/mojtaba-kazemi-529264317/"><i class="fab fa-linkedin"></i></a>
-            </div>
-        </div>
+    <!-- Right side: Image -->
+    <div class="contact-image">
+        <img src="/goat_image_2.png" alt="Contact Us" style="width:200px; height:auto; border-radius:10px;">
+    </div>
+</div>
+
+<!-- Social links below -->
+<div class="social-links">
+    <a href="https://github.com/youngsassanid"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/company/cyborgsecurity-research/"><i class="fab fa-linkedin"></i></a>
+</div>
+
 
         <div class="footer">
             <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
@@ -3327,6 +3349,10 @@ def serve_goat_image():
 @app.route('/cyborgsecurity_visualizer.gif')
 def serve_goat_shield():
     return send_file('cyborgsecurity_visualizer.gif', mimetype='image/gif')
+
+@app.route('/goat_image_2.png')
+def serve_goat_image_2():
+    return send_file('goat_image_2.png', mimetype='image/gif')
 
 # ========== Unit Tests ==========
 class TestCyborgSecurity(unittest.TestCase):
@@ -3426,3 +3452,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
