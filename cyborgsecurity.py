@@ -2524,10 +2524,10 @@ def resources():
         CyborgSecurity aims to protect the wider ecosystem, regardless of manufacturer.
     </p>
     <ul>
-        <li><strong>Neuralink</strong> – Ultra-high bandwidth BCIs designed to treat neurological conditions and eventually enhance human-AI interaction.</li>
         <li><strong>Synchron</strong> – Minimally invasive “stentrode” BCIs implanted via blood vessels, reducing surgical risk.</li>
         <li><strong>Paradromics</strong> – High-bandwidth neural implants focused on restoring communication for patients with paralysis.</li>
         <li><strong>Blackrock Neurotech</strong> – Clinical-grade devices with decades of research in neuroprosthetics and BCIs.</li>
+        <li><strong>Neuralink</strong> – Ultra-high bandwidth BCIs designed to treat neurological conditions and eventually enhance human-AI interaction.</li>
         <li><strong>Precision Neuroscience</strong> – Founded by a former Neuralink co-founder, focusing on scalable neural implants.</li>
         <li><strong>BrainGate</strong> – Pioneering research group developing implanted BCIs for restoring motor and communication functions.</li>
     </ul>
