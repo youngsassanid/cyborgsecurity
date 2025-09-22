@@ -59,7 +59,7 @@ From spoofed biosignals to memory tampering, CyborgSecurity models real-world at
   - *Perfect for monitoring both physiological and cybernetic well-being*
 - **`/pricing`** – Transparent open-source licensing
 - **`/resources`** – Educational hub on:
-  - Neuralink and brain-computer interfaces
+  - Brain-computer interfaces (BCIs) and neural implants
   - FDA-recalled pacemakers (2017 cybersecurity vulnerability)
   - Implant security best practices
   - Links to OWASP, NIST, IEEE, and FDA
@@ -165,9 +165,9 @@ Or follow the interactive prompt to toggle debug mode.
 
 ## Implant Simulation
 
-The system simulates a **NeuroLink V3** implant, but you can extend the `CyborgInterface` class to model:
+The system simulates a **Connexus** implant, but you can extend the `CyborgInterface` class to model:
 
-- Neuralink-style BCIs
+- Brain-computer interfaces (BCIs)
 - Pacemakers and ICDs
 - Smart cochlear implants
 - Retinal chips
