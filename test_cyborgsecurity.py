@@ -22,7 +22,7 @@ class TestCyborgSecurity(unittest.TestCase):
     def test_device_creation(self):
         """Test that CyborgInterface initializes correctly."""
         self.assertEqual(self.device.device_id, "TEST-001")
-        self.assertEqual(self.device.implant_type, "NeuraLink V3")
+        self.assertEqual(self.device.implant_type, "Connexus")
         self.assertIsInstance(self.device.signal_baseline, list)
         self.assertEqual(len(self.device.signal_baseline), 100)
         fingerprint = self.device.memory_fingerprint
