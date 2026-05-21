@@ -1,0 +1,615 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyborgSecurity - Advanced Cybersecurity Suite</title>
+    <link rel="icon" type="image/png" href="/public/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    .hero-logo {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 20px auto;
+        display: block;
+        border-radius: 50%;
+}
+        :root {
+            --primary: #00ff41;
+            --secondary: #008f11;
+            --dark: #003b00;
+            --darker: #001a00;
+            --black: #000000;
+            --gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+            --critical: #ff0033;
+            --warning: #ffaa00;
+            --info: #00aaff;
+            --purple: #8a2be2;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, var(--black), var(--darker));
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(0, 59, 0, 0.3), rgba(0, 0, 0, 0.8));
+            border-radius: 20px;
+            margin: 20px 0 40px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--secondary);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+        }
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--purple), var(--primary));
+            animation: gradient 3s ease-in-out infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 6px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            font-weight: 800;
+        }
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--primary);
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .feature-card {
+            background: linear-gradient(145deg, var(--darker), var(--dark));
+            border: 1px solid rgba(0, 143, 17, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 255, 65, 0.2);
+            border-color: rgba(0, 255, 65, 0.5);
+        }
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .feature-card p {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .terminal {
+            background: linear-gradient(145deg, var(--darker), var(--black));
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 50px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+        .terminal::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: rgba(0, 255, 65, 0.1);
+            border-bottom: 1px solid var(--primary);
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 10px;
+        }
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ff5f56; box-shadow: 0 0 10px #ff5f56; }
+        .dot-yellow { background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e; }
+        .dot-green { background: #27c93f; box-shadow: 0 0 10px #27c93f; }
+        .terminal-title {
+            color: var(--primary);
+            margin-left: 20px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .terminal-content {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 2;
+            color: #00ff41;
+            position: relative;
+            z-index: 1;
+            padding: 0 15px;
+        }
+        .terminal-content span {
+            color: #00aaff;
+        }
+        .usage {
+            background: linear-gradient(145deg, var(--darker), var(--dark));
+            border-left: 4px solid var(--primary);
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 0 15px 15px 0;
+        }
+        .usage h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        .usage code {
+            display: block;
+            background: var(--black);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            overflow-x: auto;
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            white-space: pre;
+        }
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(145deg, var(--darker), var(--dark));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 143, 17, 0.3);
+        }
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--purple));
+            border-radius: 2px;
+        }
+        .section h3 {
+            color: var(--secondary);
+            margin: 25px 0 15px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .section ul {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+        .section li {
+            margin: 12px 0;
+            color: #ccc;
+            position: relative;
+            padding-left: 20px;
+        }
+        .section li::before {
+            content: "â–¶";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .section p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        .social-buttons {
+            text-align: center;
+            margin: 50px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(145deg, var(--secondary), var(--dark));
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .social-button:hover {
+            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            color: var(--black);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 65, 0.4);
+        }
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(0, 59, 0, 0.2), rgba(0, 0, 0, 0.8));
+            margin: 60px 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--secondary);
+        }
+        .cta-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--purple), var(--primary));
+        }
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--info));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cta-section p {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            color: var(--black);
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+            margin: 10px;
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 255, 65, 0.5);
+        }
+        .dashboard-button {
+            display: inline-block;
+            background: linear-gradient(145deg, var(--info), var(--secondary));
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        .dashboard-button:hover {
+            background: linear-gradient(145deg, var(--primary), var(--info));
+            color: var(--black);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 255, 65, 0.4);
+        }
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-top: 60px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        .glow {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 5px var(--primary); }
+            to { text-shadow: 0 0 20px var(--primary), 0 0 30px var(--secondary); }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .container {
+                padding: 15px;
+            }
+            .section {
+                padding: 25px;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+            .social-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 15px; /* Minimal vertical padding */
+    text-align: center;
+}
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .purple-glow {
+    background: linear-gradient(145deg, var(--purple), #6a0dad) !important;
+    color: white;
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.7) !important; /* purple idle glow */
+}
+.purple-glow:hover {
+    box-shadow: 0 12px 30px rgba(138, 43, 226, 0.8) !important; /* stronger purple hover glow */
+    transform: translateY(-3px) scale(1.03);
+}
+
+        .hero-button {
+            display: inline-block;
+            background: linear-gradient(145deg, var(--primary), var(--secondary));
+            color: var(--black);
+            padding: 10px 35px;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 8px 25px rgba(0, 255, 65, 0.4);
+            margin-top: 8px;
+        }
+        .hero-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 255, 65, 0.6);
+        }
+        .hero-button i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+
+    <div class="container">
+        <header>
+            <div class="hero-content">
+                <img src="/public/favicon.png" alt="CyborgSecurity Logo" class="hero-logo">
+
+                <h1 class="hero-title glow">CyborgSecurity</h1>
+                <p class="hero-subtitle">Protecting next-generation medical implants from sophisticated cyber threats</p>
+                <!-- <p class="hero-tagline">Protecting next-generation cyborg systems from sophisticated cyber threats</p> -->
+                <a href="/dashboard" class="hero-button">
+                    <i class="fas fa-shield-alt"></i> Access Security Dashboard
+                </a>
+                <a href="/threat-intel" class="hero-button purple-glow" style="background: linear-gradient(145deg, var(--purple), #6a0dad); margin-top: 15px;">
+    <i class="fas fa-globe"></i> Open Threat Intelligence
+                </a>
+                <a href="/goat-mode" class="hero-button" style="
+    background: linear-gradient(145deg, #00e6b8, #00a88a); 
+    color: var(--black); 
+    margin-top: 15px; 
+    box-shadow: 0 8px 25px rgba(0, 230, 184, 0.5);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+">
+    <i class="fas fa-crown"></i> ACTIVATE GOAT MODE
+</a>
+               <a href="/health" class="hero-button" style="
+    background: linear-gradient(145deg, #4b6cb7, #6a8ddc);
+    color: var(--black);
+    margin-top: 15px;
+    box-shadow: 0 8px 25px rgba(75, 108, 183, 0.8);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+">
+    <i class="fas fa-stethoscope"></i> Run Health Monitor
+</a> 
+            </div>
+        </header>
+
+                <img src="/public/cyborgsecurity_visualizer.gif" 
+     alt="The GOAT stops a cyber threat" 
+     style="display:block; margin:15px auto; width:100%; border-radius:12px; 
+     box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+
+        <section class="section">
+            <h2>About CyborgSecurity</h2>
+            <p>CyborgSecurity is a simulated cybersecurity suite for monitoring and protecting human-machine interfaces (HMI), specifically designed 
+            for medical implants such as neural links, pacemakers, and electronic prosthetics. This Python-based tool detects spoofed signals, communication 
+            tampering, memory anomalies, and more â€” complete with real-time alert encryption, dashboard visualization, and an extensible architecture.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Biosignal Spoofing Detection</h3>
+                <p>Advanced statistical analysis to detect anomalous biosignal patterns that may indicate spoofing attempts or corrupted data transmission.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3>Neural Device Monitoring</h3>
+                <p>Real-time monitoring of neural device communication protocols with checksum verification and replay attack detection.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3>Implant I/O Traffic Analysis</h3>
+                <p>Deep packet inspection and traffic analysis to identify suspicious patterns in implant input/output operations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-wave-square"></i>
+                </div>
+                <h3>Signal Frequency Drift Detection</h3>
+                <p>Continuous monitoring of signal stability to detect frequency drift anomalies that could indicate system compromise.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Memory Integrity Verification</h3>
+                <p>Cryptographic verification of system memory to ensure configuration and operational integrity.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Encrypted Alert System</h3>
+                <p>Military-grade encryption for all security alerts with real-time JSON export and CSV logging capabilities.</p>
+            </div>
+        </section>
+        <section class="section">
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Cyborg Simulation:</strong> Emulates biosignals and I/O traffic for implantable devices</li>
+        <li><strong>Threat Detection:</strong> Identifies spoofed, tampered, or replayed data, calculates severity scores, and auto remediates critical threats</li>
+        <li><strong>Web Dashboard:</strong> Real-time alert monitoring and implant overview via Flask interface</li>
+        <li><strong>Health Monitoring:</strong> Tracks biomedical metrics in real time</li>
+        <li><strong>Logging & Encryption:</strong> Logs anomalies in CSV, JSON, or plaintext; alerts encrypted using Fernet (AES)</li>
+        <li><strong>Developer Tools:</strong> Unit testing integration and debug mode toggle</li>
+        <li><strong>Dynamic Threat Injection:</strong> Searchable and filterable attack data for training and demonstration</li>
+        <li><strong>GOAT Mode:</strong> Emergency zero-trust lockdown API endpoints</li>
+    </ul>
+</section>
+
+        <section class="cta-section">
+            <h2>Ready to Secure Your Cyborg Infrastructure?</h2>
+            <p>Download CyborgSecurity today and protect your human-machine interfaces from advanced cyber threats</p>
+            <a href="https://github.com/youngsassanid/cyborgsecurity" class="cta-button" target="_blank">
+                Download Now
+            </a>
+        </section>
+        <footer>
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </footer>
+    </div>
+</body>
+</html>

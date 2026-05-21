@@ -1,0 +1,59 @@
+<style>
+#cs-navbar {
+    background: rgba(0, 59, 0, 0.3);
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 65, 0.2);
+}
+#cs-navbar a {
+    color: #008f11;
+    text-decoration: none;
+    transition: color 0.25s;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+#cs-navbar a:hover,
+#cs-navbar a.active { color: #00ff41; }
+#cs-navbar a.nav-brand {
+    color: #00ff41;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 1px;
+}
+@media (max-width: 600px) {
+    #cs-navbar { gap: 6px 12px; padding: 10px 12px; }
+}
+</style>
+
+<nav id="cs-navbar">
+    <a href="/" class="nav-brand">CyborgSecurity</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/threat-intel">Threat Intel</a>
+    <a href="/goat-mode">GOAT Mode</a>
+    <a href="/health">Health</a>
+    <a href="/guide">Setup Guide</a>
+    <a href="/resources">Resources</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</nav>
+
+<script>
+(function () {
+    var path = window.location.pathname;
+    document.querySelectorAll('#cs-navbar a').forEach(function (a) {
+        var href = a.getAttribute('href');
+        if (href === path || (href !== '/' && path.startsWith(href))) {
+            a.classList.add('active');
+        }
+    });
+}());
+</script>

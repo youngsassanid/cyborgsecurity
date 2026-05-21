@@ -1,0 +1,187 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Setup Guide | CyborgSecurity</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/png" href="/public/favicon.png">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --gray: #1a1a1a;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .section {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 25px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h2, h3 {
+                color: var(--primary);
+            }
+            .usage {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 15px;
+                border-radius: 8px;
+                font-family: 'Courier New', monospace;
+                overflow-x: auto;
+            }
+            code {
+                color: var(--primary);
+                font-weight: bold;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'partials/navbar.html' %}
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-book-open"></i> Getting Started Guide</h1>
+                <p class="tagline">Your complete walkthrough for installing, running, and understanding CyborgSecurity.</p>
+            </header>
+
+            <section class="section">
+                <h2>How to Run</h2>
+                <h3>1. Clone the Repository</h3>
+                <div class="usage">
+                    <code>git clone https://github.com/youngsassanid/cyborgsecurity.git<br>cd cyborgsecurity</code>
+                </div>
+                <h3>2. Set Up the Virtual Environment</h3>
+                <div class="usage">
+                    <code>python -m venv .venv<br>source .venv/bin/activate       # On Windows use: .venv\\Scripts\\activate<br>pip install -r requirements.txt</code>
+                </div>
+                <p>If requirements.txt does not exist, you can manually install:</p>
+                <div class="usage">
+                    <code>pip install flask cryptography</code>
+                </div>
+                <h3>3. Run the Program</h3>
+                <div class="usage">
+                    <code>python cyborgsecurity.py</code>
+                </div>
+                <p>You'll be prompted to toggle debug mode and the system will begin scanning.</p>
+            </section>
+
+            <section class="section">
+                <h2>Accessing the Dashboard</h2>
+                <p>Once the system finishes scanning:</p>
+                <ul>
+                    <li>Open your browser and go to: <strong>http://localhost:5000/dashboard</strong></li>
+                    <li>View all alerts, threat severities, and device metadata.</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>Output Files</h2>
+                <ul>
+                    <li><strong>cyborgsecurity.log:</strong> System events & errors</li>
+                    <li><strong>alerts.json:</strong> Decrypted alert data for external integrations</li>
+                    <li><strong>alerts.csv:</strong> Tabular version of all alerts</li>
+                    <li><strong>ENCRYPTION_KEY:</strong> Not stored â€” ephemeral key is generated at runtime (for now)</li>
+                </ul>
+            </section>
+
+            <section class="section">
+                <h2>Debug Mode</h2>
+                <p>When launching, type <strong>on</strong> to enable debug mode or <strong>off</strong> to keep it silent.</p>
+                <div class="usage">
+                    <code>[INPUT] Type 'on' to enable debug mode, 'off' to disable, or 'exit' to quit.</code>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>Implant Simulation</h2>
+                <p>The system currently simulates a NeuroLink V3 implant, but you can expand the <code>CyborgInterface</code> class to model:</p>
+                <ul>
+                    <li>Electronic prosthetic limbs</li>
+                    <li>Implantable cardioverter-defibrillators (ICDs)</li>
+                    <li>Smart cochlear implants</li>
+                    <li>Retinal chip implants</li>
+                    <li>Brain-computer interfaces (BCIs)</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>

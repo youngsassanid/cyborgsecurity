@@ -1,0 +1,220 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Resources | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/public/favicon.png">
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --info: #00aaff;
+            }
+            body {
+                font-family: 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            nav {
+                background: rgba(0, 59, 0, 0.3);
+                padding: 12px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                font-weight: 600;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+            }
+            nav a {
+                color: var(--light);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+            nav a:hover {
+                color: var(--primary);
+            }
+            nav a.current {
+                color: var(--primary);
+                text-decoration: underline;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .section {
+                background: rgba(0, 59, 0, 0.2);
+                padding: 25px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.1);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            }
+            h2 {
+                color: var(--primary);
+                margin-top: 0;
+            }
+            ul {
+                padding-left: 20px;
+            }
+            li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .external-link {
+                color: var(--info);
+                text-decoration: none;
+            }
+            .external-link:hover {
+                text-decoration: underline;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'partials/navbar.html' %}
+
+        
+                <div class="container">
+            <header>
+                <h1><i class="fas fa-brain"></i> The Future of Cyber-Medical Security</h1>
+                <p class="tagline">Understanding neural implants, medical devices, and the need for advanced protection.</p>
+            </header>
+
+<div class="section">
+    <h2>What Are Brain-Computer Interfaces?</h2>
+    <p>
+        <strong>Brain-Computer Interfaces (BCIs)</strong> are devices that connect the human brain directly to computers, enabling communication between neural activity and digital systems. 
+        They have the potential to treat neurological conditions (like Parkinsonâ€™s, epilepsy, and spinal cord injuries) and enhance human capabilities.
+    </p>
+    <p>
+        BCIs typically use tiny electrodes to read and stimulate neural activity, transmitting data wirelessly. 
+        While revolutionary, this creates new cybersecurity challenges: if compromised, a hacker could potentially manipulate neural signals, steal sensitive brain data, or disrupt device functionality.
+    </p>
+    <p>
+        <strong>Learn more about BCIs:</strong>
+        <ul>
+            <li><a href="https://www.synchron.com/" class="external-link" target="_blank">Synchron â€“ Minimally Invasive BCIs</a></li>
+            <li><a href="https://www.brain-gate.org/" class="external-link" target="_blank">BrainGate â€“ Clinical BCI Research</a></li>
+            <li><a href="https://www.blackrockneurotech.com/" class="external-link" target="_blank">Blackrock Neurotech â€“ Neural Implant Devices</a></li>
+        </ul>
+    </p>
+</div>
+
+<div class="section">
+    <h2>Major BCI & Medical Implant Platforms</h2>
+    <p>
+        There are several companies pioneering brain-computer interfaces and medical implants, each with unique approaches and devices. 
+        CyborgSecurity aims to protect the wider ecosystem, regardless of manufacturer.
+    </p>
+    <ul>
+        <li><strong>Synchron</strong> â€“ Minimally invasive â€œstentrodeâ€ BCIs implanted via blood vessels, reducing surgical risk.</li>
+        <li><strong>Paradromics</strong> â€“ High-bandwidth neural implants focused on restoring communication for patients with paralysis.</li>
+        <li><strong>Blackrock Neurotech</strong> â€“ Clinical-grade devices with decades of research in neuroprosthetics and BCIs.</li>
+        <li><strong>Neuralink</strong> â€“ Ultra-high bandwidth BCIs designed to treat neurological conditions and eventually enhance human-AI interaction.</li>
+        <li><strong>Precision Neuroscience</strong> â€“ Founded by a former Neuralink co-founder, focusing on scalable neural implants.</li>
+        <li><strong>BrainGate</strong> â€“ Pioneering research group developing implanted BCIs for restoring motor and communication functions.</li>
+    </ul>
+    <p>
+        By supporting all of these platforms, CyborgSecurity remains independent, neutral, and focused on delivering reliable cybersecurity for every user in the BCI and medical implant ecosystem.
+    </p>
+</div>
+
+
+            <div class="section">
+                <h2>Cyber-Medical Implants: Pacemakers, Insulin Pumps & More</h2>
+                <p>
+                    Devices like <strong>pacemakers</strong>, <strong>insulin pumps</strong>, and <strong>neurostimulators</strong> are already in widespread use and 
+                    rely on wireless communication for monitoring and updates. 
+                    Unfortunately, many of these devices have known security vulnerabilities.
+                </p>
+                <p>
+                    In 2017, the FDA recalled 500,000 pacemakers due to cybersecurity risks that could allow unauthorized access to alter pacing or deplete the battery. 
+                    As these devices become more connected, they become targets for cyberattacks with life-threatening consequences.
+                </p>
+                <p>
+                    <strong>Learn more:</strong>
+                    <ul>
+                        <li><a href="https://www.fda.gov/medical-devices/implants-and-prosthetics/cybersecurity-medical-devices" class="external-link" target="_blank">FDA on Medical Device Cybersecurity</a></li>
+                        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7554872/" class="external-link" target="_blank">Security of Implantable Medical Devices (NCBI)</a></li>
+                    </ul>
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>How CyborgSecurity Simulates Real Protection</h2>
+                <p>
+                    While CyborgSecurity is a simulation, it models real-world threats to neural and medical implants:
+                </p>
+                <ul>
+                    <li><strong>Spoofed Signal Detection:</strong> Simulates protection against fake neural commands (e.g., a hacker trying to trigger a false signal).</li>
+                    <li><strong>Packet Integrity Verification:</strong> Uses SHA-256 to detect tampered data â€” critical for ensuring commands sent to a pacemaker are authentic.</li>
+                    <li><strong>Replay Attack Prevention:</strong> Timestamps stop attackers from re-sending old commands (e.g., repeating a "disable" signal).</li>
+                    <li><strong>Memory Integrity Checks:</strong> Monitors for unauthorized changes to device firmware or configuration.</li>
+                </ul>
+                <p>
+                    This app is designed to <strong>educate, simulate, and inspire</strong> future developers and security researchers on the importance of securing human-machine interfaces.
+                </p>
+            </div>
+
+            <!-- âœ… Moved inside .container -->
+            <div class="section">
+                <h2>Kazemi Cancer Research Assistant</h2>
+                <p>
+                    The <strong>Kazemi Cancer Research Assistant</strong> is a web-based oncology platform built by SÄm Kazemi in 2025. 
+                    It integrates clinical trial matching, drug interaction checks, and survival analysis tools with interactive dashboards to make cancer research more accessible and data-driven.
+                </p>
+                <p>
+                    Kazemi also seeks to intersect this project with <strong>CyborgSecurity</strong>, creating an ecosystem of cyber-medical technologies that blend medicine, computer science, and cybersecurity knowledge. 
+                    The goal is to empower researchers, educators, and patients with tools that support both health innovation and digital safety.
+                </p>
+                <p>
+                    <strong>Learn more:</strong>
+                    <ul>
+                        <li><a href="https://github.com/youngsassanid/kazemi-cancer-research-assistant/tree/main" class="external-link" target="_blank">GitHub Repository (Demo)</a></li>
+                        <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7392189/" class="external-link" target="_blank">Survival Analysis in Oncology (NCBI)</a></li>
+                    </ul>
+                </p>
+            </div>
+        </div> <!-- closes .container -->
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulartion prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>

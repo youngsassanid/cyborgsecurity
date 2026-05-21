@@ -1,0 +1,175 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Pricing | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/public/favicon.png">
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --light: #e0e0e0;
+                --gray: #1a1a1a;
+                --card-bg: rgba(0, 59, 0, 0.2);
+                --support: #00c244; /* CashApp green */
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: var(--light);
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            header {
+                text-align: center;
+                padding: 40px 20px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .tagline {
+                font-size: 1.2rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .pricing-card, .support-card {
+                background: var(--card-bg);
+                border-radius: 12px;
+                padding: 30px;
+                margin: 20px auto;
+                max-width: 600px;
+                text-align: center;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            .pricing-card h2, .support-card h2 {
+                color: var(--primary);
+                margin-top: 0;
+            }
+            .price {
+                font-size: 3rem;
+                font-weight: bold;
+                color: var(--primary);
+                margin: 15px 0;
+            }
+            .features {
+                margin: 20px 0;
+                text-align: left;
+            }
+            .features li {
+                margin: 10px 0;
+                color: #ccc;
+            }
+            .cta-button, .support-button {
+                display: inline-block;
+                margin-top: 20px;
+                padding: 12px 25px;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: all 0.3s ease;
+            }
+            .cta-button {
+                background: var(--primary);
+                color: var(--black);
+            }
+            .cta-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .support-button {
+                background: var(--support);
+                color: var(--black);
+            }
+            .support-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 194, 68, 0.4);
+            }
+            .note {
+                margin-top: 30px;
+                padding: 15px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                font-style: italic;
+                color: var(--secondary);
+                text-align: center;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'partials/navbar.html' %}
+
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-tags"></i> Transparent Pricing</h1>
+                <p class="tagline">An application built for all of mankind (and cyborgkind).</p>
+            </header>
+
+            <!-- Pricing Card -->
+            <div class="pricing-card">
+                <h2>Open Source & Currently Free</h2>
+                <div class="price">$0.00</div>
+                <p>No hidden fees. No subscriptions. No paywalls.</p>
+
+                <ul class="features">
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> 100% Free to Use</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Full Source Code Available</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> No Feature Locks</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Commercial & Personal Use</li>
+                    <li><i class="fas fa-check" style="color:var(--primary);"></i> Community Support</li>
+                </ul>
+
+                <a href="https://github.com/youngsassanid/cyborgsecurity" class="cta-button" target="_blank">
+                    <i class="fab fa-github"></i> Download Now
+                </a>
+            </div>
+
+            <!-- Support Card (separate section) -->
+            <div class="support-card">
+                <h2><i class="fas fa-hand-holding-heart"></i> Support the Project</h2>
+                <p>If youâ€™d like to help keep CyborgSecurity alive and growing, you can contribute directly:</p>
+                <a href="https://cash.app/$PersianEmpireGoods/" class="cta-button" target="_blank">
+                    <i class="fas fa-dollar-sign"></i> Support via CashApp
+                </a>
+            </div>
+
+            <div class="note">
+                <p>
+                    <strong>Note:</strong> CyborgSecurity is a simulation prototype developed for educational and research purposes. 
+                    While it models real-world security features, it is <strong>not intended for production use</strong>. 
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CyborgSecurity | Advanced Cybersecurity for the Future of Human-Machine Integration</p>
+            <p>This is a simulation prototype. Not for production use.</p>
+        </div>
+    </body>
+    </html>

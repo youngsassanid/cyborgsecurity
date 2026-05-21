@@ -1,0 +1,317 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Threat Intel | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/public/favicon.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --gray: #1a1a1a;
+                --critical: #ff0033;
+                --warning: #ffaa00;
+                --info: #00aaff;
+                --purple: #8a2be2;
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: #e0e0e0;
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                padding: 30px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .subtitle {
+                font-size: 1.1rem;
+                color: var(--secondary);
+                margin-bottom: 20px;
+            }
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin: 20px 0;
+                padding: 15px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 12px;
+                border: 1px solid rgba(0, 143, 17, 0.3);
+            }
+            .controls input, .controls select, .controls button {
+                padding: 10px 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                background: var(--darker);
+                color: var(--primary);
+            }
+            .controls input::placeholder {
+                color: #777;
+            }
+            .controls button {
+                background: var(--primary);
+                color: var(--black);
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .controls button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .threat-list {
+                max-height: 70vh;
+                overflow-y: auto;
+                margin-top: 20px;
+            }
+            .threat {
+                background: rgba(0, 59, 0, 0.2);
+                border-left: 6px solid var(--info);
+                padding: 16px;
+                margin: 12px 0;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                transition: transform 0.2s;
+            }
+            .threat:hover {
+                transform: translateX(5px);
+            }
+            .threat.critical { border-left-color: var(--critical); }
+            .threat.high { border-left-color: #ff3300; }
+            .threat.medium { border-left-color: var(--warning); }
+            .threat.ip { border-left-width: 8px; }
+            .threat.hash { background: rgba(138, 43, 226, 0.1); }
+            .threat.domain { background: rgba(0, 170, 255, 0.1); }
+            .threat-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            .threat-value {
+                font-size: 1.2rem;
+                font-family: monospace;
+                word-break: break-all;
+            }
+            .threat-type {
+                font-size: 0.9rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 3px 8px;
+                border-radius: 5px;
+            }
+            .threat-source {
+                color: var(--secondary);
+                font-size: 0.95rem;
+            }
+            .threat-time {
+                font-size: 0.9rem;
+                color: var(--secondary);
+            }
+            .footer {
+                text-align: center;
+                margin-top: 40px;
+                padding: 20px;
+                color: var(--secondary);
+                font-size: 0.9rem;
+            }
+            .empty-state {
+                text-align: center;
+                padding: 40px;
+                color: #777;
+                font-style: italic;
+            }
+            .pulse {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% { opacity: 0.7; }
+                50% { opacity: 1; }
+                100% { opacity: 0.7; }
+            }
+            @media (max-width: 768px) {
+                .controls {
+                    flex-direction: column;
+                }
+                .controls button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'partials/navbar.html' %}
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-globe"></i> Threat Intelligence Feed</h1>
+                <p class="subtitle pulse">Live simulated global cyber threat data</p>
+            </header>
+
+            <div class="controls">
+                <input type="text" id="searchThreat" placeholder="ðŸ” Search IP, hash, or domain..." />
+                <select id="filterType">
+                    <option value="">All Types</option>
+                    <option value="IP">IP Address</option>
+                    <option value="Hash">Malware Hash</option>
+                    <option value="Domain">Domain</option>
+                </select>
+                <select id="filterSeverity">
+                    <option value="">All Severities</option>
+                    <option value="Critical">Critical</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                </select>
+                <button onclick="refreshThreatFeed()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+                <button onclick="simulateNewThreat()" style="background:var(--purple)">
+                    <i class="fas fa-bolt"></i> Inject Threat
+                </button>
+            </div>
+
+            <div class="threat-list" id="threatList">
+                {% for threat in threats %}
+                    <div class="threat threat-{{ threat.severity|lower }} threat-{{ threat.type|lower }}"
+                         data-type="{{ threat.type }}" data-severity="{{ threat.severity }}" data-value="{{ threat.value }}">
+                        <div class="threat-header">
+                            <span class="threat-value">{{ threat.value }}</span>
+                            <span class="threat-type">{{ threat.type }} - {{ threat.severity }}</span>
+                        </div>
+                        <div class="threat-source">Source: {{ threat.source }}</div>
+                        <div class="threat-time">{{ threat.timestamp }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="footer">
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">â† Back to Home</a> | <a href="/dashboard" style="color:var(--primary)">Security Dashboard</a> | 
+                <a href="/goat-mode" style="color:var(--primary)">GOAT Mode</a> | 
+                <a href="/health" style="color:var(--primary)">Health Monitor</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+            </div>
+        </div>
+
+        <script>
+            function filterThreats() {
+                const search = document.getElementById('searchThreat').value.toLowerCase();
+                const type = document.getElementById('filterType').value;
+                const severity = document.getElementById('filterSeverity').value;
+                const threats = document.querySelectorAll('.threat');
+
+                threats.forEach(threat => {
+                    const value = threat.getAttribute('data-value').toLowerCase();
+                    const threatType = threat.getAttribute('data-type');
+                    const threatSeverity = threat.getAttribute('data-severity');
+
+                    const matchesSearch = value.includes(search);
+                    const matchesType = !type || threatType === type;
+                    const matchesSeverity = !severity || threatSeverity === severity;
+
+                    threat.style.display = matchesSearch && matchesType && matchesSeverity ? 'block' : 'none';
+                });
+            }
+
+            function refreshThreatFeed() {
+                // Simulate fetching new data
+                const mockThreats = [
+                    {type: "IP", value: generateIP(), source: "DDoS Botnet", severity: randomSeverity(), timestamp: new Date().toISOString().slice(0, 19)},
+                    {type: "Hash", value: generateHash(), source: "Trojan Downloader", severity: "Critical", timestamp: new Date().toISOString().slice(0, 19)},
+                    {type: "Domain", value: generateDomain(), source: "Phishing Kit", severity: "High", timestamp: new Date().toISOString().slice(0, 19)}
+                ];
+                const threatList = document.getElementById('threatList');
+                let html = '';
+                mockThreats.forEach(t => {
+                    const level = t.severity === 'Critical' ? 'critical' : t.severity === 'High' ? 'high' : 'medium';
+                    html += `
+                    <div class="threat threat-${level.toLowerCase()} threat-${t.type.toLowerCase()}" 
+                         data-type="${t.type}" data-severity="${t.severity}" data-value="${t.value}">
+                        <div class="threat-header">
+                            <span class="threat-value">${t.value}</span>
+                            <span class="threat-type">${t.type} - ${t.severity}</span>
+                        </div>
+                        <div class="threat-source">Source: ${t.source}</div>
+                        <div class="threat-time">${t.timestamp}</div>
+                    </div>`;
+                });
+                // Add new threats to top
+                threatList.innerHTML = html + threatList.innerHTML;
+                filterThreats();
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+            }
+
+            function simulateNewThreat() {
+                const types = ['IP', 'Hash', 'Domain'];
+                const sources = ['APT Group 9002', 'Ransomware Gang', 'Insider Leak', 'IoT Botnet'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const value = type === 'IP' ? generateIP() : type === 'Hash' ? generateHash() : generateDomain();
+                const source = sources[Math.floor(Math.random() * sources.length)];
+                const severity = ['Critical', 'High'][Math.floor(Math.random() * 2)];
+                const timestamp = new Date().toISOString().slice(0, 19);
+
+                const threatList = document.getElementById('threatList');
+                const level = severity === 'Critical' ? 'critical' : 'high';
+                const newThreat = document.createElement('div');
+                newThreat.className = `threat threat-${level.toLowerCase()} threat-${type.toLowerCase()} pulse`;
+                newThreat.setAttribute('data-type', type);
+                newThreat.setAttribute('data-severity', severity);
+                newThreat.setAttribute('data-value', value);
+                newThreat.innerHTML = `
+                    <div class="threat-header">
+                        <span class="threat-value">${value}</span>
+                        <span class="threat-type">${type} - ${severity}</span>
+                    </div>
+                    <div class="threat-source">Source: ${source} (Injected)</div>
+                    <div class="threat-time">${timestamp}</div>
+                `;
+                threatList.prepend(newThreat);
+                // Remove pulse after animation
+                setTimeout(() => newThreat.classList.remove('pulse'), 2000);
+                filterThreats();
+            }
+
+            function generateIP() {
+                return `192.168.${Math.floor(Math.random()*200)}.${Math.floor(Math.random()*255)}`;
+            }
+            function generateHash() {
+                return Array(32).fill(0).map(() => Math.floor(Math.random()*16).toString(16)).join('');
+            }
+            function generateDomain() {
+                const subs = ['login', 'secure', 'update', 'account'];
+                const doms = ['cyber', 'net', 'web', 'cloud'];
+                const tlds = ['com', 'biz', 'info', 'ru'];
+                return `${subs[Math.floor(Math.random()*subs.length)]}-${doms[Math.floor(Math.random()*doms.length)]}.${tlds[Math.floor(Math.random()*tlds.length)]}`;
+            }
+            function randomSeverity() {
+                const r = Math.random();
+                return r < 0.3 ? 'Critical' : r < 0.7 ? 'High' : 'Medium';
+            }
+
+            // Initialize
+            document.getElementById('searchThreat').addEventListener('input', filterThreats);
+            document.getElementById('filterType').addEventListener('change', filterThreats);
+            document.getElementById('filterSeverity').addEventListener('change', filterThreats);
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+        </script>
+    </body>
+    </html>

@@ -1,0 +1,384 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Dashboard | CyborgSecurity</title>
+        <link rel="icon" type="image/png" href="/public/favicon.png">                     
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            :root {
+                --primary: #00ff41;
+                --secondary: #008f11;
+                --dark: #003b00;
+                --darker: #001a00;
+                --black: #000000;
+                --gray: #1a1a1a;
+                --light-gray: #2a2a2a;
+                --critical: #ff0033;
+                --warning: #ffaa00;
+                --info: #00aaff;
+                --success: #00cc00;
+            }
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, var(--black), var(--darker));
+                color: #e0e0e0;
+                margin: 0;
+                padding: 20px;
+                line-height: 1.7;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                text-align: center;
+                padding: 30px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid var(--secondary);
+            }
+            h1 {
+                font-size: 2.8rem;
+                color: var(--primary);
+                margin-bottom: 10px;
+                text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            }
+            .device-info {
+                background: linear-gradient(145deg, var(--dark), var(--darker));
+                padding: 18px;
+                border-radius: 12px;
+                margin: 20px 0;
+                border: 1px solid rgba(0, 255, 65, 0.2);
+                font-size: 1.1rem;
+            }
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin: 20px 0;
+                padding: 15px;
+                background: rgba(0, 59, 0, 0.2);
+                border-radius: 12px;
+                border: 1px solid rgba(0, 143, 17, 0.3);
+            }
+            .controls input, .controls select, .controls button {
+                padding: 10px 14px;
+                border: none;
+                border-radius: 8px;
+                font-size: 1rem;
+                background: var(--darker);
+                color: var(--primary);
+            }
+            .controls input::placeholder {
+                color: #777;
+            }
+            .controls button {
+                background: var(--primary);
+                color: var(--black);
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .controls button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 255, 65, 0.4);
+            }
+            .alert-list {
+                max-height: 70vh;
+                overflow-y: auto;
+                margin-top: 20px;
+            }
+            .alert {
+                background: rgba(0, 59, 0, 0.2);
+                border-left: 6px solid var(--info);
+                padding: 16px;
+                margin: 12px 0;
+                border-radius: 8px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+                transition: transform 0.2s;
+            }
+            .alert:hover {
+                transform: translateX(5px);
+            }
+            .alert.critical { border-left-color: var(--critical); }
+            .alert.high { border-left-color: #ff3300; }
+            .alert.medium { border-left-color: var(--warning); }
+            .alert.low { border-left-color: var(--success); }
+
+            .alert-header {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 600;
+                color: var(--primary);
+            }
+            .alert-reason {
+                font-size: 1.2rem;
+            }
+            .alert-severity {
+                font-size: 0.9rem;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 3px 8px;
+                border-radius: 5px;
+            }
+            .alert-time {
+                font-size: 0.9rem;
+                color: var(--secondary);
+            }
+            .alert-data {
+                margin-top: 8px;
+                font-family: monospace;
+                font-size: 0.95rem;
+                color: #ccc;
+                background: rgba(0, 0, 0, 0.3);
+                padding: 10px;
+                border-radius: 6px;
+                overflow-x: auto;
+            }
+                    footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--secondary);
+            color: var(--secondary);
+            font-size: 1rem;
+            margin-top: 60px;
+        }
+            .empty-state {
+                text-align: center;
+                padding: 40px;
+                color: #777;
+                font-style: italic;
+            }
+            @media (max-width: 768px) {
+                .controls {
+                    flex-direction: column;
+                }
+                .controls button {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'partials/navbar.html' %}
+        <div class="container">
+            <header>
+                <h1><i class="fas fa-shield-alt"></i> CyborgSecurity Dashboard</h1>
+                <p>Real-Time Threat Monitoring for Neural Implants</p>
+            </header>
+            <div class="device-info">
+                <strong>Implant Type:</strong> {{ implant_type }} |
+                <strong>Device ID:</strong> {{ device_id }} |
+                <strong>Total Alerts:</strong> <span id="alert-count">{{ alerts|length }}</span>
+            </div>
+
+            <!-- Interactive Controls -->
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="ðŸ” Search reason or data..." />
+                <select id="severityFilter">
+                    <option value="">All Severities</option>
+                    <option value="5">Critical (5)</option>
+                    <option value="4">High (4)</option>
+                    <option value="3">Medium (3)</option>
+                    <option value="2">Low-Medium (2)</option>
+                    <option value="1">Low (1)</option>
+                </select>
+                <button onclick="refreshAlerts()">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+                <label>
+                    <input type="checkbox" id="autoRefresh" onchange="toggleAutoRefresh(this)">
+                    Auto-refresh
+                </label>
+                <button onclick="clearAlerts()" style="background:#ff3300">
+                    <i class="fas fa-trash"></i> Clear All
+                </button>
+                <button onclick="exportToJson()">
+                    <i class="fas fa-file-export"></i> Export JSON
+                </button>
+                <button onclick="exportToCsv()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+                <button onclick="downloadTests()" style="background:var(--primary); color:var(--black);">
+                    <i class="fas fa-vial"></i> Download Unit Tests
+                </button>
+                <button onclick="window.location='/test'" style="background:var(--primary); color:var(--black);">
+    <i class="fas fa-vial"></i> Run Unit Tests
+</button>
+
+            </div>
+
+            <!-- Alert List -->
+            <div class="alert-list" id="alertList">
+                {% if alerts %}
+                    {% for alert in alerts %}
+                        <div class="alert alert-{{ 'critical' if alert.severity == 5 else 'high' if alert.severity >= 4 else 'medium' if alert.severity >= 2 else 'low' }}"
+                             data-severity="{{ alert.severity }}" data-reason="{{ alert.reason }}" data-data='{{ alert.data | tojson }}'>
+                            <div class="alert-header">
+                                <span class="alert-reason">{{ alert.reason }}</span>
+                                <span class="alert-severity">Severity: {{ alert.severity }}</span>
+                            </div>
+                            <div class="alert-time">{{ alert.time }}</div>
+                            <div class="alert-data">{{ alert.data }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                        <p>No alerts detected. System secure.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="footer">
+                <p>CyborgSecurity | <a href="/" style="color:var(--info)">â† Back to Home</a> | 
+                <a href="/threat-intel" style="color:var(--primary)">Threat Intel</a> 
+                | <a href="/goat-mode" style="color:var(--primary)">GOAT Mode</a> | 
+                <a href="/health" style="color:var(--primary)">Health Monitor</a> | Last updated: <span id="lastUpdate">{{ now }}</span></p>
+            </div>
+        </div>
+
+        <script>
+            let autoRefreshInterval;
+
+            function filterAlerts() {
+                const search = document.getElementById('searchInput').value.toLowerCase();
+                const severity = document.getElementById('severityFilter').value;
+                const alerts = document.querySelectorAll('.alert');
+
+                alerts.forEach(alert => {
+                    const reason = alert.getAttribute('data-reason').toLowerCase();
+                    const data = alert.getAttribute('data-data').toLowerCase();
+                    const alertSeverity = alert.getAttribute('data-severity');
+
+                    const matchesSearch = reason.includes(search) || data.includes(search);
+                    const matchesSeverity = !severity || alertSeverity === severity;
+
+                    alert.style.display = matchesSearch && matchesSeverity ? 'block' : 'none';
+                });
+
+                updateAlertCount();
+            }
+
+            function updateAlertCount() {
+                const visible = document.querySelectorAll('.alert[style*="display: block"], .alert:not([style])').length;
+                document.getElementById('alert-count').textContent = visible;
+            }
+            
+            function downloadTests() {
+    const link = document.createElement('a');
+    link.href = '/download/test';
+    link.download = 'test_cyborgsecurity.py';
+    link.click();
+}
+
+            function refreshAlerts() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const alertList = document.getElementById('alertList');
+                        let html = '';
+
+                        if (data.length === 0) {
+                            html = `
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                                    <p>No alerts detected. System secure.</p>
+                                </div>`;
+                        } else {
+                            data.reverse(); // newest first
+                            data.forEach(alert => {
+                                const level = alert.severity === 5 ? 'critical' :
+                                             alert.severity >= 4 ? 'high' :
+                                             alert.severity >= 2 ? 'medium' : 'low';
+                                html += `
+                                <div class="alert alert-${level}" data-severity="${alert.severity}" data-reason="${alert.reason}" data-data='${JSON.stringify(alert.data)}'>
+                                    <div class="alert-header">
+                                        <span class="alert-reason">${alert.reason}</span>
+                                        <span class="alert-severity">Severity: ${alert.severity}</span>
+                                    </div>
+                                    <div class="alert-time">${alert.time}</div>
+                                    <div class="alert-data">${JSON.stringify(alert.data)}</div>
+                                </div>`;
+                            });
+                        }
+                        alertList.innerHTML = html;
+                        filterAlerts();
+                        document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+                    })
+                    .catch(err => console.error('Failed to refresh alerts:', err));
+            }
+
+            function toggleAutoRefresh(checkbox) {
+                if (checkbox.checked) {
+                    autoRefreshInterval = setInterval(refreshAlerts, 3000);
+                } else {
+                    clearInterval(autoRefreshInterval);
+                }
+            }
+
+            function clearAlerts() {
+                if (confirm("Are you sure you want to clear all alerts? This cannot be undone.")) {
+                    fetch('/api/clear_alerts', { method: 'POST' })
+                        .then(() => {
+                            document.getElementById('alertList').innerHTML = `
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle" style="font-size:3rem; color:var(--success);"></i>
+                                    <p>All alerts cleared. System reset.</p>
+                                </div>`;
+                            updateAlertCount();
+                        })
+                        .catch(err => alert('Failed to clear alerts.'));
+                }
+            }
+
+            function exportToJson() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `cyborgsecurity_alerts_${new Date().toISOString().split('T')[0]}.json`;
+                        a.click();
+                    });
+            }
+
+            function exportToCsv() {
+                fetch('/api/alerts')
+                    .then(res => res.json())
+                    .then(data => {
+                        const headers = ['time', 'reason', 'severity', 'data', 'device_id'];
+                        const rows = data.map(alert => [
+                            alert.time,
+                            alert.reason,
+                            alert.severity,
+                            JSON.stringify(alert.data),
+                            alert.device_id
+                        ]);
+                        let csv = headers.join(',') + '\\n' + rows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\\n');
+
+                        const blob = new Blob([csv], { type: 'text/csv' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `cyborgsecurity_alerts_${new Date().toISOString().split('T')[0]}.csv`;
+                        a.click();
+                    });
+            }
+
+            // Initialize
+            document.getElementById('searchInput').addEventListener('input', filterAlerts);
+            document.getElementById('severityFilter').addEventListener('change', filterAlerts);
+
+            // Set initial count
+            updateAlertCount();
+
+            // Auto-refresh off by default
+            document.getElementById('autoRefresh').checked = false;
+        </script>
+    </body>
+    </html>
