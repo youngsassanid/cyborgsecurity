@@ -99,22 +99,19 @@ cd cyborgsecurity
 ```bash
 python -m venv .venv
 source .venv/bin/activate       # On Windows: .venv\Scripts\activate
-pip install flask cryptography
+pip install -r requirements.txt
 ```
-
-> No `requirements.txt`? Just install the two core dependencies.
 
 ### 3. Run the Program
 
 ```bash
-python cyborgsecurity.py
+python main.py
 ```
 
 You can optionally pass arguments:
 ```bash
-python cyborgsecurity.py --debug      # Enable debug mode
-python cyborgsecurity.py --no-debug   # Disable debug mode
-python cyborgsecurity.py test         # Run unit tests
+python main.py --debug    # Enable debug mode
+python main.py test       # Run unit tests
 ```
 
 ---
@@ -150,16 +147,32 @@ Once running, open your browser and visit:
 
 ---
 
-## Debug Mode & Testing
+## Project Structure
 
-Use command-line arguments to control behavior:
-
-```bash
-python cyborgsecurity.py --debug    # Enable verbose logging
-python cyborgsecurity.py test       # Run unit tests
+```
+cyborgsecurity/
+├── main.py              # Entry point
+├── config.py            # Config and encryption key
+├── state.py             # Shared runtime state
+├── core/
+│   ├── device.py        # CyborgInterface — implant simulation
+│   └── monitor.py       # CyborgSecurityMonitor — threat detection
+├── web/
+│   ├── __init__.py      # Flask app factory
+│   ├── auth.py          # Basic auth middleware
+│   └── routes/          # Blueprint modules per feature
+├── templates/           # Jinja2 HTML templates
+├── public/              # Static assets (images, GIFs)
+├── tests/               # Unit tests
+└── requirements.txt
 ```
 
-Or follow the interactive prompt to toggle debug mode.
+## Debug Mode & Testing
+
+```bash
+python main.py --debug    # Enable verbose logging
+python main.py test       # Run unit tests
+```
 
 ---
 
